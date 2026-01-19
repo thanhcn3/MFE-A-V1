@@ -1,0 +1,63 @@
+{
+  "name": "mfe-demo",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "serve:ssr:remote-home": "node dist/remote-home/server/server.mjs",
+    "run:shell": "ng serve shell",
+    "run:remote-home": "ng serve remote-home",
+    "run:remote-about": "ng serve remote-about",
+    "run:remote-profile": "ng serve remote-profile",
+    "run:all": "npm-run-all --parallel run:shell run:remote-home run:remote-about run:remote-profile"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
+    "overrides": [
+      {
+        "files": "*.html",
+        "options": {
+          "parser": "angular"
+        }
+      }
+    ]
+  },
+  "private": true,
+  "packageManager": "npm@10.8.2",
+  "dependencies": {
+    "@angular/animations": "^21.1.0",
+    "@angular/common": "^21.1.0",
+    "@angular/compiler": "^21.1.0",
+    "@angular/core": "^21.1.0",
+    "@angular/forms": "^21.1.0",
+    "@angular/platform-browser": "^21.1.0",
+    "@angular/platform-server": "^21.1.0",
+    "@angular/router": "^21.1.0",
+    "@angular/ssr": "^21.1.0",
+    "@softarc/native-federation-node": "^3.3.4",
+    "bootstrap": "^5.3.8",
+    "cors": "^2.8.5",
+    "es-module-shims": "^1.5.12",
+    "express": "^5.1.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular-architects/native-federation": "^21.0.4",
+    "@angular-devkit/build-angular": "^21.1.0",
+    "@angular/build": "^21.1.0",
+    "@angular/cli": "^21.1.0",
+    "@angular/compiler-cli": "^21.1.0",
+    "@types/express": "^5.0.1",
+    "@types/node": "^20.17.19",
+    "jsdom": "^27.1.0",
+    "ng-packagr": "^21.1.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "~5.9.2",
+    "vitest": "^4.0.8"
+  }
+}
