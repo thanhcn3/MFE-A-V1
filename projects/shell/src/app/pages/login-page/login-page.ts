@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthStore } from 'core';
+import { AuthStore, ToastService } from 'core';
 
 @Component({
   selector: 'app-login-page',
@@ -16,6 +16,7 @@ export class LoginPage {
   password = '';
   
   private authStore = inject(AuthStore);
+  private toastService = inject(ToastService);
   private router = inject(Router);
 
   isLoading = this.authStore.isLoading;
@@ -29,17 +30,20 @@ export class LoginPage {
       
       this.authStore.login(payload).subscribe({
         next: () => {
+          this.toastService.success('Login successfully!', 2000);
           this.router.navigate(['/home']);
         },
         error: (err) => {
           console.error('Login failed full error:', err);
           if (err.status === 404) {
-             alert('Error 404: API endpoint not found. Please check Proxy settings or Backend URL.');
+             this.toastService.error('Error 404: API endpoint not found. Please check Proxy settings or Backend URL.');
           } else {
-             alert(`Login failed! Error ${err.status}: ${err.message}`);
+             this.toastService.error(`Login failed! Error ${err.status}: ${err.message}`);
           }
         }
       });
+    } else {
+      this.toastService.warning('Please enter username and password');
     }
   }
 }
