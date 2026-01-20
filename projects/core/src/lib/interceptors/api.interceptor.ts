@@ -6,7 +6,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   // Clone request to add auth header if needed
   const authReq = req.clone({
     setHeaders: {
-      'X-App-Version': '1.0.0'
+      'X-App-Version': '1.0.0',
+      'Authorization': 'Bearer dummy-token'
     }
   });
 
