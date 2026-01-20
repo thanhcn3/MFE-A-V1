@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  # Host Application
+  shell:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PROJECT_NAME: shell
+    ports:
+      - "4200:80"
+    networks:
+      - mfe-network
+
+  # Remote: Home
+  remote-home:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PROJECT_NAME: remote-home
+    ports:
+      - "4201:80"
+    networks:
+      - mfe-network
+
+  # Remote: About
+  remote-about:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PROJECT_NAME: remote-about
+    ports:
+      - "4202:80"
+    networks:
+      - mfe-network
+
+  # Remote: Profile
+  remote-profile:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PROJECT_NAME: remote-profile
+    ports:
+      - "4203:80"
+    networks:
+      - mfe-network
+
+networks:
+  mfe-network:
+    driver: bridge

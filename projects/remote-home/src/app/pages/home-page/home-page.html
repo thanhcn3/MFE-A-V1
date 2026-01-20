@@ -14,8 +14,14 @@
         <div class="text-muted small text-uppercase tracking-wide">Satisfaction</div>
       </div>
     </div>
-    <div class="d-grid">
+    <div class="d-grid gap-2">
       <button class="btn btn-primary btn-lg">Explore More</button>
+      <button class="btn btn-success btn-lg" (click)="callApi()">Call API Demo</button>
+    </div>
+    
+    <div *ngIf="data" class="mt-4 p-3 bg-light border rounded">
+      <h5 class="text-success">API Response:</h5>
+      <pre>{{ data | json }}</pre>
     </div>
   </div>
 </div>

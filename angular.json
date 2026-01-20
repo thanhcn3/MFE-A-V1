@@ -68,8 +68,11 @@
 							"buildTarget": "mfe-demo:build:development"
 						}
 					},
-					"defaultConfiguration": "development"
-				},
+          "defaultConfiguration": "development",
+          "options": {
+            "proxyConfig": "proxy.conf.json"
+          }
+        },
 				"test": {
 					"builder": "@angular/build:unit-test"
 				}
@@ -170,10 +173,11 @@
 							"buildTarget": "shell:esbuild:development"
 						}
 					},
-					"defaultConfiguration": "development",
-					"options": {
-						"port": 4200
-					}
+          "defaultConfiguration": "development",
+          "options": {
+            "port": 4200,
+            "proxyConfig": "proxy.conf.json"
+          }
 				}
 			}
 		},
@@ -279,10 +283,11 @@
 							"buildTarget": "remote-home:esbuild:development"
 						}
 					},
-					"defaultConfiguration": "development",
-					"options": {
-						"port": 4201
-					}
+          "defaultConfiguration": "development",
+          "options": {
+            "port": 4201,
+            "proxyConfig": "proxy.conf.json"
+          }
 				}
 			}
 		},
@@ -381,10 +386,11 @@
 							"buildTarget": "remote-about:esbuild:development"
 						}
 					},
-					"defaultConfiguration": "development",
-					"options": {
-						"port": 4202
-					}
+          "defaultConfiguration": "development",
+          "options": {
+            "port": 4202,
+            "proxyConfig": "proxy.conf.json"
+          }
 				}
 			}
 		},
@@ -483,10 +489,11 @@
 							"buildTarget": "remote-profile:esbuild:development"
 						}
 					},
-					"defaultConfiguration": "development",
-					"options": {
-						"port": 4203
-					}
+          "defaultConfiguration": "development",
+          "options": {
+            "port": 4203,
+            "proxyConfig": "proxy.conf.json"
+          }
 				}
 			}
     },

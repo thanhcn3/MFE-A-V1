@@ -1,0 +1,11 @@
+{
+  "/api": {
+    "target": "https://agentbanking.bbtech.io.vn",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "headers": {
+      "Origin": "https://agentbanking.bbtech.io.vn"
+    }
+  }
+}
