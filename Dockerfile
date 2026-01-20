@@ -1,33 +1,43 @@
-# Stage 1: Build the Angular application
-FROM node:20-alpine AS build
+# =====================
+# Stage 1: Build Angular
+# =====================
+FROM node:20-alpine
+# ⬆️ node 18 ổn định hơn node 20 với npm trong Docker
 
 WORKDIR /app
 
-# Copy package files và cài đặt dependencies
-COPY package*.json ./
-RUN npm ci
+# Fix npm network + cache
+RUN npm config set registry https://registry.npmjs.org \
+ && npm config set fetch-retries 2 \
+ && npm config set fetch-retry-mintimeout 10000 \
+ && npm config set fetch-retry-maxtimeout 60000
 
-# Copy toàn bộ source code
+# Cài Angular CLI global (QUAN TRỌNG)
+RUN npm install -g @angular/cli@latest
+
+# Copy dependency files
+COPY package.json package-lock.json ./
+
+# Install deps (KHÔNG song song)
+RUN npm install --legacy-peer-deps --no-audit --no-fund
+
+# Copy source
 COPY . .
 
-# Biến nhận tên dự án cần build (vd: shell, remote-home,...)
+# Tăng heap cho Angular build
+ENV NODE_OPTIONS="--max-old-space-size=8096"
+
 ARG PROJECT_NAME
+RUN ng build ${PROJECT_NAME} --configuration production
 
-# Build dự án cụ thể ở chế độ production
-RUN npm run ng -- build ${PROJECT_NAME} --configuration production
+# =====================
+# Stage 2: Nginx
+# =====================
+FROM nginx:1.25-alpine
 
-# Stage 2: Serve with Nginx
-FROM nginx:alpine
-
-# Copy cấu hình Nginx đã tạo
+ARG PROJECT_NAME
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Tham số tên dự án để copy đúng thư mục dist
-ARG PROJECT_NAME
-
-# Copy kết quả build từ Stage 1 sang thư mục html của Nginx
 COPY --from=build /app/dist/${PROJECT_NAME}/browser /usr/share/nginx/html
 
 EXPOSE 80
-
 CMD ["nginx", "-g", "daemon off;"]

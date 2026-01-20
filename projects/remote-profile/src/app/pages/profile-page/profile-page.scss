@@ -1,4 +1,170 @@
-.card {
+.profile-container {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 1rem;
+  background-color: #f0f2f5;
+  min-height: 80vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.profile-card {
+  background: white;
+  width: 100%;
   max-width: 500px;
-  margin: 0 auto;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.profile-header {
+  position: relative;
+  height: 200px;
+  margin-bottom: 60px; /* Space for avatar */
+
+  .cover-photo {
+    height: 100%;
+    background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+    background-size: cover;
+  }
+
+  .avatar-container {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px;
+    background: white;
+    border-radius: 50%;
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid white;
+    }
+  }
+}
+
+.profile-body {
+  padding: 0 2rem 2rem;
+  text-align: center;
+
+  .user-identity {
+    margin-bottom: 1.5rem;
+
+    h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      color: #333;
+    }
+
+    .role {
+      color: #007bff;
+      font-weight: 500;
+      margin: 0.5rem 0;
+    }
+
+    .location {
+      color: #777;
+      font-size: 0.9rem;
+      margin: 0;
+    }
+  }
+
+  .user-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+
+      .count {
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: #333;
+      }
+
+      .label {
+        font-size: 0.8rem;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+    }
+  }
+
+  .profile-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+
+    button {
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &.btn-primary {
+        background-color: #007bff;
+        color: white;
+        &:hover { background-color: #0056b3; }
+      }
+
+      &.btn-secondary {
+        background-color: #f1f3f5;
+        color: #333;
+        &:hover { background-color: #e9ecef; }
+      }
+    }
+  }
+
+  .user-details {
+    text-align: left;
+    
+    .detail-section {
+        margin-bottom: 1.5rem;
+        
+        h3 {
+            font-size: 1rem;
+            color: #333;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        p {
+            color: #555;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .activity-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            
+            li {
+                padding: 0.5rem 0;
+                border-bottom: 1px solid #f9f9f9;
+                color: #555;
+                &:last-child { border-bottom: none; }
+                &:before {
+                    content: '•';
+                    color: #007bff;
+                    margin-right: 0.5rem;
+                }
+            }
+        }
+    }
+  }
 }

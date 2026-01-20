@@ -1,29 +1,55 @@
-<div class="card shadow-sm border-0">
-  <div class="card-header bg-white border-bottom-0 p-4 pb-0 d-flex align-items-center gap-3">
-    <div class="rounded-circle bg-danger text-white d-flex align-items-center justify-content-center" style="width: 64px; height: 64px; font-size: 1.5rem;">JD</div>
-    <div>
-      <h2 class="h4 m-0">John Doe</h2>
-      <p class="text-secondary m-0 small">Senior Developer</p>
+<div class="profile-container">
+  <div class="profile-card">
+    <div class="profile-header">
+      <div class="cover-photo"></div>
+      <div class="avatar-container">
+        <img [src]="user.avatar" [alt]="user.name" class="avatar">
+      </div>
     </div>
-  </div>
-  <div class="card-body p-4">
-    <p class="mb-4">This section is from <code class="bg-light text-danger px-2 rounded">remote-profile</code>.</p>
     
-    <ul class="list-group list-group-flush mb-4">
-      <li class="list-group-item d-flex justify-content-between px-0">
-        <span class="text-secondary">Email</span>
-        <span class="fw-medium">john.doe@example.com</span>
-      </li>
-      <li class="list-group-item d-flex justify-content-between px-0">
-        <span class="text-secondary">Location</span>
-        <span class="fw-medium">San Francisco, CA</span>
-      </li>
-      <li class="list-group-item d-flex justify-content-between px-0">
-        <span class="text-secondary">Team</span>
-        <span class="fw-medium">Platform Engineering</span>
-      </li>
-    </ul>
+    <div class="profile-body">
+      <div class="user-identity">
+        <h1>{{ user.name }}</h1>
+        <p class="role">{{ user.role }}</p>
+        <p class="location">📍 {{ user.location }}</p>
+      </div>
 
-    <button class="btn btn-outline-secondary w-100">Edit Profile</button>
+      <div class="user-stats">
+        <div class="stat-item">
+          <span class="count">{{ user.stats.projects }}</span>
+          <span class="label">Projects</span>
+        </div>
+        <div class="stat-item">
+          <span class="count">{{ user.stats.followers }}</span>
+          <span class="label">Followers</span>
+        </div>
+        <div class="stat-item">
+          <span class="count">{{ user.stats.following }}</span>
+          <span class="label">Following</span>
+        </div>
+      </div>
+
+      <div class="profile-actions">
+        <button class="btn-primary">Follow</button>
+        <button class="btn-secondary">Message</button>
+      </div>
+
+      <div class="user-details">
+         <div class="detail-section">
+           <h3>About</h3>
+           <p>Passionate developer with a focus on Micro Frontend architectures and scalable web solutions.</p>
+         </div>
+         <div class="detail-section">
+          <h3>Contact</h3>
+          <p>📧 {{ user.email }}</p>
+        </div>
+         <div class="detail-section">
+           <h3>Recent Activity</h3>
+           <ul class="activity-list">
+             <li *ngFor="let activity of user.recentActivities">{{ activity }}</li>
+           </ul>
+         </div>
+      </div>
+    </div>
   </div>
 </div>

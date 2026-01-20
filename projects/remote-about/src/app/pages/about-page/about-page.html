@@ -1,23 +1,28 @@
-<div class="card shadow-sm border-0">
-  <div class="card-header bg-success text-white p-4">
-    <h2 class="h3 m-0">ℹ️ About Us</h2>
-  </div>
-  <div class="card-body p-4">
-    <p class="mb-4">This content is delivered by the <code class="bg-light text-success px-2 rounded">remote-about</code> application.</p>
-    
-    <div class="row g-4">
-      <div class="col-md-6">
-        <div class="p-3 bg-light rounded h-100">
-          <h3 class="h5 text-dark">🚀 Modular</h3>
-          <p class="text-secondary mb-0 small">Independent development and deployment of micro-frontends.</p>
+<div class="about-container">
+  <section class="about-story">
+    <div class="story-image">
+      <img [src]="storyImage" alt="About our company">
+    </div>
+    <div class="story-content">
+      <h2>About Us</h2>
+      <p class="lead">We are building the next generation of web applications using Micro Frontend architecture.</p>
+      <p>Our mission is to empower teams to work independently while delivering a cohesive experience to users. By breaking down the monolith, we enable faster adaptability and scaling.</p>
+    </div>
+  </section>
+
+  <section class="team-section">
+    <h2>Meet Our Team</h2>
+    <div class="team-grid">
+      <div class="team-card" *ngFor="let member of teamMembers">
+        <div class="member-image-wrapper">
+          <img [src]="member.image" [alt]="member.name" class="member-image">
         </div>
-      </div>
-      <div class="col-md-6">
-        <div class="p-3 bg-light rounded h-100">
-          <h3 class="h5 text-dark">⚡ Fast</h3>
-          <p class="text-secondary mb-0 small">Lazy loading ensures only necessary code is downloaded.</p>
+        <div class="member-info">
+          <h3>{{ member.name }}</h3>
+          <span class="role">{{ member.role }}</span>
+          <p>{{ member.bio }}</p>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </div>

@@ -1,27 +1,29 @@
-<div class="card shadow-sm border-0">
-  <div class="card-header bg-primary text-white p-4">
-    <h2 class="h3 m-0">🏠 Welcome Home!</h2>
-  </div>
-  <div class="card-body p-4">
-    <p class="lead text-secondary">This is the <strong>Home</strong> application, served from <code class="bg-light px-2 rounded text-primary">remote-home</code>.</p>
-    <div class="row my-4">
-      <div class="col-6 text-center border-end">
-        <div class="display-6 fw-bold text-dark">120+</div>
-        <div class="text-muted small text-uppercase tracking-wide">Users</div>
+<div class="home-container">
+  <header class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Welcome to MFE Home</h1>
+      <p>Building the future with Micro Frontends</p>
+      <div class="cta-group">
+        <button routerLink="/about" class="cta-button">Learn More</button>
+        <button (click)="callApi()" class="cta-button secondary">Test API</button>
       </div>
-      <div class="col-6 text-center">
-        <div class="display-6 fw-bold text-dark">85%</div>
-        <div class="text-muted small text-uppercase tracking-wide">Satisfaction</div>
+      <div *ngIf="data" class="api-result">
+        API Result: {{ data | json }}
       </div>
     </div>
-    <div class="d-grid gap-2">
-      <button class="btn btn-primary btn-lg">Explore More</button>
-      <button class="btn btn-success btn-lg" (click)="callApi()">Call API Demo</button>
+  </header>
+
+  <section class="features">
+    <h2>Our Core Features</h2>
+    <div class="feature-grid">
+      <div class="feature-card" *ngFor="let feature of features">
+        <img [src]="feature.image" [alt]="feature.title" class="feature-image">
+        <div class="feature-info">
+          <h3>{{ feature.title }}</h3>
+          <p>{{ feature.description }}</p>
+        </div>
+      </div>
     </div>
-    
-    <div *ngIf="data" class="mt-4 p-3 bg-light border rounded">
-      <h5 class="text-success">API Response:</h5>
-      <pre>{{ data | json }}</pre>
-    </div>
-  </div>
+  </section>
 </div>
