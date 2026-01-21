@@ -1,4 +1,3 @@
-
 FROM scratch
-COPY --from=build /app/dist/remote-about/ /app/
+COPY dist/remote-about/ /app/
 

@@ -1,6 +1,4 @@
-
-
 # Copy built static files for remote-profile app into image
 FROM scratch
-COPY --from=build /app/dist/remote-profile/ /app/
+COPY dist/remote-profile/ /app/
 
