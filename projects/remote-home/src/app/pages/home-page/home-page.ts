@@ -1,19 +1,56 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { BaseApiService } from 'core';
+import { BaseApiService, LanguageService, createTranslateLoader } from 'core';
+import { TranslateModule, TranslateService, TranslateLoader, TranslateStore } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { Subscription } from 'rxjs';
 
 const ASSET_PATH = new URL('assets/images/', import.meta.url).href;
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, TranslateModule],
+  providers: [
+    TranslateService,
+    TranslateStore,
+    {
+      provide: TranslateLoader,
+      useFactory: (http: HttpClient) => {
+          return createTranslateLoader(http, new URL('../../../assets/i18n/', import.meta.url).href);
+      },
+      deps: [HttpClient]
+    }
+  ],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
 })
-export class HomePage {
+export class HomePage implements OnInit, OnDestroy {
   private apiService = inject(BaseApiService);
+  // Inject TranslateService and LanguageService via constructor
+  constructor(
+     private translate: TranslateService, 
+     private languageService: LanguageService
+  ) {}
+
+  private langSub!: Subscription;
+
+  ngOnInit() {
+    const currentLang = this.languageService.getCurrentLanguage();
+    this.translate.use(currentLang);
+
+    this.langSub = this.languageService.language$.subscribe(lang => {
+       this.translate.use(lang);
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.langSub) {
+      this.langSub.unsubscribe();
+    }
+  }
+
   data: any;
   heroImage = `url('${ASSET_PATH}home-hero.jpg')`;
 

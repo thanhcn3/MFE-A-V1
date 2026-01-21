@@ -9,4 +9,8 @@ export * from './lib/guards/auth.guard';
 export * from './lib/interceptors/api.interceptor';
 export * from './lib/services/toast.service';
 export * from './lib/component/toast/toast.component';
+export * from './lib/services/language.service';
+export * from './lib/utils/i18n.utils';
+
+
 

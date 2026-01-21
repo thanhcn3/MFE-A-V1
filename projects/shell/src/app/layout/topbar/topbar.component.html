@@ -1,10 +1,24 @@
 <header class="topbar-container">
   <div class="page-title">
-    <h1>Dashboard</h1>
+    <h1>{{ 'SHELL.TITLE' | translate }}</h1>
     <span class="breadcrumb">Home / Overview</span>
   </div>
   
   <div class="topbar-actions">
+    <div class="lang-switcher">
+      <button 
+        [class.active]="currentLang === 'vi'" 
+        (click)="changeLanguage('vi')" 
+        title="Tiếng Việt">
+        🇻🇳 VN
+      </button>
+      <button 
+        [class.active]="currentLang === 'en'" 
+        (click)="changeLanguage('en')" 
+        title="English">
+        🇺🇸 EN
+      </button>
+    </div>
     <button class="icon-btn">
       🔔 <span class="badge">3</span>
     </button>

@@ -4,14 +4,14 @@
       <img [src]="storyImage" alt="About our company">
     </div>
     <div class="story-content">
-      <h2>About Us</h2>
-      <p class="lead">We are building the next generation of web applications using Micro Frontend architecture.</p>
-      <p>Our mission is to empower teams to work independently while delivering a cohesive experience to users. By breaking down the monolith, we enable faster adaptability and scaling.</p>
+      <h2>{{ 'ABOUT.TITLE' | translate }}</h2>
+      <p class="lead">{{ 'ABOUT.DESC_1' | translate }}</p>
+      <p>{{ 'ABOUT.DESC_2' | translate }}</p>
     </div>
   </section>
 
   <section class="team-section">
-    <h2>Meet Our Team</h2>
+    <h2>{{ 'ABOUT.MEET_TEAM' | translate }}</h2>
     <div class="team-grid">
       <div class="team-card" *ngFor="let member of teamMembers">
         <div class="member-image-wrapper">

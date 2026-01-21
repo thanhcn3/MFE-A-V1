@@ -2,11 +2,11 @@
   <header class="hero" [style.background-image]="heroImage">
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <h1>Welcome to MFE Home</h1>
-      <p>Building the future with Micro Frontends</p>
+      <h1>{{ 'HOME.WELCOME' | translate }}</h1>
+      <p>{{ 'HOME.SUBTITLE' | translate }}</p>
       <div class="cta-group">
-        <button routerLink="/about" class="cta-button">Learn More</button>
-        <button (click)="callApi()" class="cta-button secondary">Test API</button>
+        <button routerLink="/about" class="cta-button">{{ 'HOME.LEARN_MORE' | translate }}</button>
+        <button (click)="callApi()" class="cta-button secondary">{{ 'HOME.TEST_API' | translate }}</button>
       </div>
       <div *ngIf="data" class="api-result">
         API Result: {{ data | json }}
@@ -15,7 +15,7 @@
   </header>
 
   <section class="features">
-    <h2>Our Core Features</h2>
+    <h2>{{ 'HOME.CORE_FEATURES' | translate }}</h2>
     <div class="feature-grid">
       <div class="feature-card" *ngFor="let feature of features">
         <img [src]="feature.image" [alt]="feature.title" class="feature-image">

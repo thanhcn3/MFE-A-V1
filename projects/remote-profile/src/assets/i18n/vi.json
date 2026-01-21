@@ -1,0 +1,17 @@
+{
+  "PROFILE": {
+    "TITLE": "Hồ sơ người dùng",
+    "WELCOME": "Xin chào",
+    "SwitchLanguage": "Đổi ngôn ngữ",
+    "PROJECTS": "Dự án",
+    "FOLLOWERS": "Người theo dõi",
+    "FOLLOWING": "Đang theo dõi",
+    "FOLLOW": "Theo dõi",
+    "MESSAGE": "Nhắn tin",
+    "ABOUT": "Giới thiệu",
+    "CONTACT": "Liên hệ",
+    "RECENT_ACTIVITY": "Hoạt động gần đây",
+    "ROLE": "Vai trò",
+    "LOCATION": "Địa điểm"
+  }
+}

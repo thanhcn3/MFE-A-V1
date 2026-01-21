@@ -17,35 +17,38 @@
       <div class="user-stats">
         <div class="stat-item">
           <span class="count">{{ user.stats.projects }}</span>
-          <span class="label">Projects</span>
+          <span class="label">{{ 'PROFILE.PROJECTS' | translate }}</span>
         </div>
         <div class="stat-item">
           <span class="count">{{ user.stats.followers }}</span>
-          <span class="label">Followers</span>
+          <span class="label">{{ 'PROFILE.FOLLOWERS' | translate }}</span>
         </div>
         <div class="stat-item">
           <span class="count">{{ user.stats.following }}</span>
-          <span class="label">Following</span>
+          <span class="label">{{ 'PROFILE.FOLLOWING' | translate }}</span>
         </div>
       </div>
 
       <div class="profile-actions">
-        <button class="btn-primary">Follow</button>
-        <button class="btn-secondary">Message</button>
+        <button class="btn-primary">{{ 'PROFILE.FOLLOW' | translate }}</button>
+        <button class="btn-secondary">{{ 'PROFILE.MESSAGE' | translate }}</button>
       </div>
 
       <div class="user-details">
          <div class="detail-section">
-           <h3>About</h3>
+           <h3>{{ 'PROFILE.ABOUT' | translate }}</h3>
            <p>Passionate developer with a focus on Micro Frontend architectures and scalable web solutions.</p>
          </div>
          <div class="detail-section">
-          <h3>Contact</h3>
+          <h3>{{ 'PROFILE.CONTACT' | translate }}</h3>
           <p>📧 {{ user.email }}</p>
         </div>
          <div class="detail-section">
-           <h3>Recent Activity</h3>
+           <h3>{{ 'PROFILE.RECENT_ACTIVITY' | translate }}</h3>
            <ul class="activity-list">
+             <!-- Note: *ngFor requires CommonModule or imports: [NgFor] in standalone component. 
+                  ProfilePage already imports CommonModule. 
+             -->
              <li *ngFor="let activity of user.recentActivities">{{ activity }}</li>
            </ul>
          </div>
