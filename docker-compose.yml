@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:80"
+      - "9091:80"
     restart: unless-stopped
     container_name: mfe-angular-app
     environment:
