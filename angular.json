@@ -46,7 +46,8 @@
 									"type": "anyComponentStyle",
 									"maximumWarning": "4kB",
 									"maximumError": "8kB"
-								}
+						"prerender": false,
+						"prerender": false,
 							],
 							"outputHashing": "all"
 						},
@@ -91,7 +92,9 @@
 			"architect": {
 				"build": {
 					"builder": "@angular-architects/native-federation:build",
-					"options": {},
+					"options": {
+						"prerender": false
+					},
 					"configurations": {
 						"production": {
 							"target": "shell:esbuild:production"
@@ -205,7 +208,8 @@
 				"build": {
 					"builder": "@angular-architects/native-federation:build",
 					"options": {
-						"ssr": true
+						"ssr": true,
+						"prerender": false
 					},
 					"configurations": {
 						"production": {
@@ -260,6 +264,7 @@
 						"ssr": {
 							"entry": "projects/remote-home/src/server.ts"
 						},
+						"prerender": false,
 						"polyfills": [
 							"es-module-shims"
 						],
@@ -324,7 +329,9 @@
 			"architect": {
 				"build": {
 					"builder": "@angular-architects/native-federation:build",
-					"options": {},
+					"options": {
+						"prerender": false
+					},
 					"configurations": {
 						"production": {
 							"target": "remote-about:esbuild:production"
