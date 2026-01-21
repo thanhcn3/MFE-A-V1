@@ -1,34 +1,19 @@
 # =====================
 # Stage 1: Build Angular
 # =====================
-FROM node:20-alpine AS build
-# ⬆️ node 18 ổn định hơn node 20 với npm trong Docker
+FROM node:20-bullseye AS build
 
 WORKDIR /app
 
-# Fix npm network + cache
-RUN npm config set registry https://registry.npmjs.org \
- && npm config set fetch-retries 2 \
- && npm config set fetch-retry-mintimeout 10000 \
- && npm config set fetch-retry-maxtimeout 60000
-
-# Cài Angular CLI global (QUAN TRỌNG)
-RUN npm install -g @angular/cli@latest
-
-# Copy dependency files
 COPY package.json package-lock.json ./
+RUN npm ci --legacy-peer-deps
 
-# Install deps (KHÔNG song song)
-RUN npm install --legacy-peer-deps --no-audit --no-fund
-
-# Copy source
 COPY . .
 
-# Tăng heap cho Angular build
 ENV NODE_OPTIONS="--max-old-space-size=8096"
 
 ARG PROJECT_NAME
-RUN ng build ${PROJECT_NAME} --configuration production
+RUN npx ng build ${PROJECT_NAME} --configuration production
 
 # =====================
 # Stage 2: Nginx
