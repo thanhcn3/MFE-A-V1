@@ -1,36 +1,11 @@
 services:
-  shell:
+  mfe-app:
     build:
       context: .
-      dockerfile: projects/shell/Dockerfile.static
+      dockerfile: Dockerfile
+    container_name: mfe-angular-app
     ports:
-      - "4200:80"
-    depends_on:
-      - remote-home
-      - remote-about
-      - remote-profile
-    container_name: mfe-shell
-
-  remote-home:
-    build:
-      context: .
-      dockerfile: projects/remote-home/Dockerfile.static
-    ports:
-      - "4201:80"
-    container_name: mfe-remote-home
-
-  remote-about:
-    build:
-      context: .
-      dockerfile: projects/remote-about/Dockerfile.static
-    ports:
-      - "4202:80"
-    container_name: mfe-remote-about
-
-  remote-profile:
-    build:
-      context: .
-      dockerfile: projects/remote-profile/Dockerfile.static
-    ports:
-      - "4203:80"
-    container_name: mfe-remote-profile
+      - "8080:80"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production

@@ -1,18 +1,14 @@
 node_modules
-# keep dist to support static docker builds
+dist
 .git
-.gitignore
+.angular
+.vscode
+*.log
 npm-debug.log*
-yarn-error.log*
-.angular
-.vscode
 .DS_Store
-node_modules
-.git
-.angular
-.vscode
+Thumbs.db
 .idea
-npm-debug.log
-Dockerfile
-docker-compose.yml
-.gitignore
+*.swp
+*.swo
+coverage
+.nyc_output
