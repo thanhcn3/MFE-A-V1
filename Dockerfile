@@ -1,56 +1,20 @@
-# ============================
-# Stage 1: Build Angular MFE
-# ============================
-FROM node:22-alpine AS build
-
-WORKDIR /app
-
-# Install build dependencies for Alpine
-RUN apk add --no-cache \
-    python3 \
-    make \
-    g++ \
-    git
-
-# Set environment variables for optimal build
-ENV NODE_OPTIONS="--max-old-space-size=4096"
-ENV MAGIC_STRING_FORCE_WASM=1
-ENV NAPI_RS_FORCE_WASM=1
-ENV npm_config_optional=false
-
-# Copy package files
-COPY package.json package-lock.json* ./
-
-# Install dependencies
-RUN npm cache clean --force && \
-    npm ci --legacy-peer-deps --omit=optional --ignore-scripts || \
-    npm install --legacy-peer-deps --omit=optional
-
-# Remove native bindings if exist
-RUN rm -rf node_modules/@napi-rs/magic-string-* 2>/dev/null || true
-
-# Copy source code
-COPY . .
-
-# Build all MFE projects
-RUN npm run ng build shell -- --configuration=production && \
-    npm run ng build remote-home -- --configuration=production && \
-    npm run ng build remote-about -- --configuration=production && \
-    npm run ng build remote-profile -- --configuration=production
-
-
-# ============================
-# Stage 2: Nginx
-# ============================
+# Production image with Nginx - Sử dụng pre-built files từ máy server
 FROM nginx:alpine
 
-RUN rm /etc/nginx/conf.d/default.conf
+# Remove default nginx config
+RUN rm -rf /usr/share/nginx/html/*
+
+# Copy pre-built applications từ dist folder (đã build sẵn trên máy)
+COPY dist/shell/browser /usr/share/nginx/html/shell
+COPY dist/remote-home/browser /usr/share/nginx/html/remote-home
+COPY dist/remote-about/browser /usr/share/nginx/html/remote-about
+COPY dist/remote-profile/browser /usr/share/nginx/html/remote-profile
+
+# Copy nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf
 
-COPY --from=build /app/dist/shell/browser /usr/share/nginx/html/shell
-COPY --from=build /app/dist/remote-home/browser /usr/share/nginx/html/remote-home
-COPY --from=build /app/dist/remote-about/browser /usr/share/nginx/html/remote-about
-COPY --from=build /app/dist/remote-profile/browser /usr/share/nginx/html/remote-profile
-
+# Expose port 80
 EXPOSE 80
+
+# Start nginx
 CMD ["nginx", "-g", "daemon off;"]

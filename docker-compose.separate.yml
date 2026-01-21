@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  shell:
+    build:
+      context: .
+      dockerfile: Dockerfile.shell
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    container_name: mfe-shell
+    networks:
+      - mfe-network
+
+  remote-home:
+    build:
+      context: .
+      dockerfile: Dockerfile.remote-home
+    ports:
+      - "8081:80"
+    restart: unless-stopped
+    container_name: mfe-remote-home
+    networks:
+      - mfe-network
+
+  remote-about:
+    build:
+      context: .
+      dockerfile: Dockerfile.remote-about
+    ports:
+      - "8082:80"
+    restart: unless-stopped
+    container_name: mfe-remote-about
+    networks:
+      - mfe-network
+
+  remote-profile:
+    build:
+      context: .
+      dockerfile: Dockerfile.remote-profile
+    ports:
+      - "8083:80"
+    restart: unless-stopped
+    container_name: mfe-remote-profile
+    networks:
+      - mfe-network
+
+networks:
+  mfe-network:
+    driver: bridge
