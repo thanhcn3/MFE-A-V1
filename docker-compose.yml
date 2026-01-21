@@ -3,6 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      network: host
       args:
         PROJECT_NAME: shell
     ports:
@@ -13,6 +14,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      network: host
       args:
         PROJECT_NAME: remote-home
     ports:
@@ -23,6 +25,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      network: host
       args:
         PROJECT_NAME: remote-about
     ports:
@@ -33,6 +36,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      network: host
       args:
         PROJECT_NAME: remote-profile
     ports:
