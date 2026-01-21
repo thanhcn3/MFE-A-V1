@@ -1,7 +1,6 @@
-# Dockerfile for Remote-Profile app static files
-FROM nginx:alpine
-RUN rm -rf /usr/share/nginx/html/*
-COPY dist/remote-profile/ /usr/share/nginx/html/
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+
+
+# Copy built static files for remote-profile app into image
+FROM scratch
+COPY --from=build /app/dist/remote-profile/ /app/
 

@@ -1,7 +1,4 @@
-# Dockerfile for Remote-About app static files
-FROM nginx:alpine
-RUN rm -rf /usr/share/nginx/html/*
-COPY dist/remote-about/ /usr/share/nginx/html/
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+
+FROM scratch
+COPY --from=build /app/dist/remote-about/ /app/
 
