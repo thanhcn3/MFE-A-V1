@@ -5,25 +5,34 @@ FROM node:22-bullseye AS build
 
 WORKDIR /app
 
-# Toolchain cơ bản
+# Toolchain
 RUN apt-get update && apt-get install -y \
     build-essential \
     python3 \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-# Pin npm ổn định cho Node 22
+# Pin npm
 RUN npm install -g npm@10.5.0
 
-# 🔥 ÉP magic-string dùng WASM (QUAN TRỌNG)
+# 🔥🔥🔥 CẤM native binding (CỰC KỲ QUAN TRỌNG)
 ENV MAGIC_STRING_FORCE_WASM=1
+ENV NAPI_RS_FORCE_WASM=1
+ENV npm_config_optional=false
+ENV npm_config_platform=linux
+ENV npm_config_arch=x64
+ENV npm_config_libc=glibc
 
 # Copy lockfile
 COPY package.json package-lock.json ./
 
-# Cài dependencies (không cần optional native)
+# Install deps (KHÔNG optional native)
 RUN npm cache clean --force \
- && npm ci --legacy-peer-deps
+ && npm ci --legacy-peer-deps --omit=optional
+
+# 🔥 ĐẢM BẢO không còn native magic-string
+RUN rm -rf node_modules/@napi-rs/magic-string-* \
+ && rm -rf node_modules/@napi-rs/magic-string/binding.js || true
 
 # Copy source
 COPY . .
@@ -36,7 +45,7 @@ RUN npx --no-install ng build shell \
 
 
 # ============================
-# Stage 2: Nginx Production
+# Stage 2: Nginx
 # ============================
 FROM nginx:alpine
 
