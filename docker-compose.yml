@@ -1,11 +1,25 @@
+version: '3.8'
+
 services:
   mfe-app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile  # Use Dockerfile.ubuntu for Ubuntu base
+      args:
+        BUILDKIT_INLINE_CACHE: 1
+    image: mfe-angular-app:latest
     container_name: mfe-angular-app
     ports:
       - "8080:80"
     restart: unless-stopped
     environment:
       - NODE_ENV=production
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/shell"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

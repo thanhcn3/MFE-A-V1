@@ -1,18 +1,39 @@
 # ============================
-# Stage 1: Build Angular MFE
+# Alternative Dockerfile using Ubuntu base
+# Usage: docker build -f Dockerfile.ubuntu -t mfe-app .
 # ============================
-FROM node:22-alpine AS build
+
+# Stage 1: Build Angular MFE
+FROM ubuntu:22.04 AS build
+
+# Prevent interactive prompts
+ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /app
 
-# Install build dependencies for Alpine
-RUN apk add --no-cache \
+# Configure DNS and install dependencies
+RUN echo "nameserver 8.8.8.8" > /etc/resolv.conf && \
+    echo "nameserver 8.8.4.4" >> /etc/resolv.conf && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+    curl \
+    ca-certificates \
+    gnupg \
     python3 \
     make \
     g++ \
-    git
+    git && \
+    rm -rf /var/lib/apt/lists/*
 
-# Set environment variables for optimal build
+# Install Node.js 22.x
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
+    apt-get install -y nodejs && \
+    rm -rf /var/lib/apt/lists/*
+
+# Verify Node installation
+RUN node --version && npm --version
+
+# Set environment variables
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 ENV MAGIC_STRING_FORCE_WASM=1
 ENV NAPI_RS_FORCE_WASM=1
@@ -26,7 +47,7 @@ RUN npm cache clean --force && \
     npm ci --legacy-peer-deps --omit=optional --ignore-scripts || \
     npm install --legacy-peer-deps --omit=optional
 
-# Remove native bindings if exist
+# Remove native bindings
 RUN rm -rf node_modules/@napi-rs/magic-string-* 2>/dev/null || true
 
 # Copy source code
@@ -37,7 +58,6 @@ RUN npm run ng build shell -- --configuration=production && \
     npm run ng build remote-home -- --configuration=production && \
     npm run ng build remote-about -- --configuration=production && \
     npm run ng build remote-profile -- --configuration=production
-
 
 # ============================
 # Stage 2: Nginx
