@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y \
 ENV npm_config_optional=true
 ENV npm_config_platform=linux
 ENV npm_config_arch=x64
+ENV npm_config_libc=glibc
 
 # Copy lock trước để cache
 COPY package.json package-lock.json ./
@@ -28,6 +29,10 @@ RUN npm cache clean --force \
 
 # Copy source
 COPY . .
+
+# Ensure native bindings stay present after copy
+RUN npm install @napi-rs/magic-string-linux-x64-gnu@0.3.4 --no-save \
+ && npm install @oxc-parser/binding-linux-x64-gnu@0.8.0 --no-save
 
 # Tăng heap cho Angular
 ENV NODE_OPTIONS="--max-old-space-size=8192"
