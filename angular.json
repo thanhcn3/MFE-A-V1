@@ -258,11 +258,6 @@
 						"scripts": [
 							"node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
 						],
-						"server": "projects/remote-home/src/main.server.ts",
-						"outputMode": "server",
-						"ssr": {
-							"entry": "projects/remote-home/src/server.ts"
-						},
 						"prerender": false,
 						"polyfills": [
 							"es-module-shims"
@@ -288,6 +283,9 @@
 								}
 							],
 							"outputHashing": "all"
+						},
+						"csr": {
+							"outputMode": "static"
 						},
 						"development": {
 							"optimization": false,
