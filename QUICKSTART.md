@@ -1,84 +1,205 @@
-# 🚀 Quick Start - Docker Build Guide
+# 🚀 Quick Start - Docker Build & Deploy Guide
 
 ## TL;DR
 
 ```bash
-# Windows (Khuyến nghị)
-.\build-docker.bat
+# Build tất cả projects trước
+build-all.bat         # Windows
+./build-all.sh        # Linux/Mac
 
-# Hoặc manual
-docker compose build --no-cache
-docker compose up
+# Tạo và chạy Docker containers
+docker-compose -f docker-compose.separate.yml up -d
 
-# Truy cập
-http://localhost:8080/shell
+# Truy cập ứng dụng
+http://localhost:8080  # Shell
+http://localhost:8081  # Remote-Home
+http://localhost:8082  # Remote-About
+http://localhost:8083  # Remote-Profile
 ```
 
-## 3 Giải Pháp Có Sẵn
+## 🎯 Kiến Trúc Deployment
 
-### 1. ⚡ Alpine (MẶC ĐỊNH - Khuyến nghị)
+Project sử dụng **Module Federation** với 4 micro-frontends độc lập:
+- **Shell** (Host App) - Port 8080
+- **Remote-Home** - Port 8081
+- **Remote-About** - Port 8082
+- **Remote-Profile** - Port 8083
+
+Mỗi app có Docker image riêng, deploy độc lập.
+
+## 🚀 Deployment Options
+
+### Option 1: Deploy TẤT CẢ (Khuyến nghị)
+
 ```bash
-# File: Dockerfile
-# Kích thước: ~150MB
-# Tốc độ: Rất nhanh
-docker compose build
+# 1. Build tất cả projects
+build-all.bat                    # Windows
+./build-all.sh                   # Linux/Mac
+
+# 2. Tạo tất cả Docker images
+build-docker-all.bat             # Windows
+./build-docker-all.sh            # Linux/Mac
+
+# 3. Chạy containers
+docker-compose -f docker-compose.separate.yml up -d
 ```
 
-### 2. 🐧 Ubuntu (Phương án 2)
+### Option 2: Deploy TỪNG APP RIÊNG
+
+#### Shell Application
 ```bash
-# File: Dockerfile.ubuntu  
-# Kích thước: ~300MB
-# Fix DNS issues tự động
-
-# Sửa docker-compose.yml:
-dockerfile: Dockerfile.ubuntu
-
-docker compose build
+npm run build shell
+docker build -f Dockerfile.shell -t mfe-shell:latest .
+docker run -d -p 8080:80 --name shell mfe-shell:latest
 ```
 
-### 3. 💻 Local Build (Phương án 3)
+#### Remote-Home Application
 ```bash
-# Build trên máy host
-npm ci --legacy-peer-deps
-npm run ng build shell -- --configuration=production
-npm run ng build remote-home -- --configuration=production
-npm run ng build remote-about -- --configuration=production
-npm run ng build remote-profile -- --configuration=production
+npm run build remote-home
+docker build -f Dockerfile.remote-home -t mfe-remote-home:latest .
+docker run -d -p 8081:80 --name remote-home mfe-remote-home:latest
+```
 
-# Tạo Dockerfile.local chỉ copy dist/
-docker build -f Dockerfile.local -t mfe-app .
+#### Remote-About Application
+```bash
+npm run build remote-about
+docker build -f Dockerfile.remote-about -t mfe-remote-about:latest .
+docker run -d -p 8082:80 --name remote-about mfe-remote-about:latest
+```
+
+#### Remote-Profile Application
+```bash
+npm run build remote-profile
+docker build -f Dockerfile.remote-profile -t mfe-remote-profile:latest .
+docker run -d -p 8083:80 --name remote-profile mfe-remote-profile:latest
+```
+
+### Option 3: Deploy ALL-IN-ONE (Legacy)
+
+```bash
+# Build tất cả
+build-all.bat
+
+# Tạo image tổng hợp
+docker build -t mfe-angular-app:latest .
+
+# Chạy container
+docker run -d -p 8080:80 --name mfe-app mfe-angular-app:latest
+```
+
+## 📊 Quản Lý Containers
+
+### Xem trạng thái
+```bash
+docker ps
+docker-compose -f docker-compose.separate.yml ps
+```
+
+### Xem logs
+```bash
+# Logs từng container
+docker logs shell
+docker logs remote-home
+
+# Logs tất cả
+docker-compose -f docker-compose.separate.yml logs -f
+```
+
+### Dừng/Khởi động lại
+```bash
+# Dừng
+docker-compose -f docker-compose.separate.yml down
+
+# Khởi động lại
+docker-compose -f docker-compose.separate.yml restart
+
+# Update và restart
+docker-compose -f docker-compose.separate.yml up -d --build
 ```
 
 ## ❌ Lỗi Thường Gặp
 
-### DNS Error
+### "dist folder not found"
+```bash
+# Build project trước!
+build-all.bat         # Windows
+./build-all.sh        # Linux/Mac
 ```
-Temporary failure resolving 'deb.debian.org'
-```
-👉 **Giải pháp**: Dùng Dockerfile.ubuntu hoặc Alpine (mặc định)
 
-### Memory Error
-```
-JavaScript heap out of memory
-```
-👉 **Giải pháp**: Đã fix sẵn với NODE_OPTIONS trong Dockerfile
+### Port bị chiếm
+```bash
+# Kiểm tra port
+netstat -ano | findstr :8080    # Windows
+lsof -i :8080                   # Linux/Mac
 
-### Network Timeout
-👉 **Giải pháp**: 
-- Check Docker Desktop network settings
-- Dùng Dockerfile.ubuntu với DNS config
-- Hoặc build local (option 3)
+# Đổi port trong docker-compose.separate.yml
+```
+
+### Container không start
+```bash
+# Xem logs để biết lý do
+docker logs <container-name>
+
+# Rebuild image
+docker build -f Dockerfile.<app> --no-cache -t mfe-<app>:latest .
+```
+
+### Remote app không load được từ Shell
+- Kiểm tra CORS headers trong nginx-remote.conf
+- Kiểm tra network giữa containers
+- Kiểm tra federation.config.js
 
 ## 📁 Files Quan Trọng
 
-- `Dockerfile` → Alpine build (khuyến nghị)
-- `Dockerfile.ubuntu` → Ubuntu 22.04 build
-- `docker-compose.yml` → Docker Compose config
-- `build-docker.bat` → Auto build script (Windows)
-- `build-docker.sh` → Auto build script (Linux/Mac)
-- `DOCKER_BUILD_GUIDE.md` → Hướng dẫn đầy đủ
+### Build Scripts
+- `build-all.bat / .sh` → Build tất cả projects
+- `build-docker-all.bat / .sh` → Build + Docker tất cả apps
+- `build-docker-shell.bat / .sh` → Build + Docker Shell
+- `build-docker-remote-*.bat / .sh` → Build + Docker từng remote app
 
-## ✅ Checklist
+### Dockerfiles
+- `DoFeatures
+
+- [x] 4 Micro-frontends độc lập
+- [x] Module Federation
+- [x] Separate Docker images per app
+- [x] Nginx với CORS support
+- [x] Health check endpoints
+- [x] Build scripts cho Windows & Linux
+- [x] Docker Compose support
+- [x] Production-ready
+- [x] Lightweight (~50-80MB per image)
+
+## 🎯 Ưu Điểm Deploy Separate
+
+1. **Độc lập**: Deploy/update từng app riêng
+2. **Scale linh hoạt**: Scale theo nhu cầu từng service
+3. **Isolation**: Lỗi ở một app không ảnh hưởng app khác
+4. **CI/CD**: Pipeline riêng cho từng app
+5. **Versioning**: Quản lý version độc lập
+
+## 🚀 Bắt Đầu Ngay
+
+```bash
+# Step 1: Clone/Open project
+cd MFE-A-V1
+
+# Step 2: Build projects
+build-all.bat              # Windows
+./build-all.sh             # Linux/Mac
+
+# Step 3: Tạo Docker images
+build-docker-all.bat       # Windows  
+./build-docker-all.sh      # Linux/Mac
+
+# Step 4: Chạy containers
+docker-compose -f docker-compose.separate.yml up -d
+
+# Step 5: Truy cập
+# Shell:         http://localhost:8080
+# Remote-Home:   http://localhost:8081
+# Remote-About:  http://localhost:8082
+# Remote-Profile: http://localhost:8083
 
 - [x] Dockerfile tối ưu với Alpine
 - [x] Dockerfile.ubuntu backup
