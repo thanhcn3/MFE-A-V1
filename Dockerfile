@@ -5,20 +5,25 @@ FROM node:20-bullseye AS build
 
 WORKDIR /app
 
-# Toolchain cho native module (RUST/NAPI)
+# Toolchain cho native modules
 RUN apt-get update && apt-get install -y \
     build-essential \
     python3 \
     git \
     && rm -rf /var/lib/apt/lists/*
 
+# ÉP npm hiểu đúng môi trường Linux
+ENV npm_config_optional=true
+ENV npm_config_platform=linux
+ENV npm_config_arch=x64
+
 # Copy lock trước để cache
 COPY package.json package-lock.json ./
 
-# Install deps + rebuild native binary (CỰC KỲ QUAN TRỌNG)
+# Install deps + ép cài native binary
 RUN npm cache clean --force \
  && npm ci --legacy-peer-deps \
- && npm rebuild @napi-rs/magic-string --force
+ && npm install @napi-rs/magic-string-linux-x64-gnu --no-save
 
 # Copy source
 COPY . .
