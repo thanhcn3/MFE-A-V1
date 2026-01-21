@@ -21,19 +21,17 @@ ENV npm_config_libc=glibc
 # Copy lock trước để cache
 COPY package.json package-lock.json ./
 
-# Install deps + ép cài native binary
+# Install deps + ép cài native binary (platform-aware)
 RUN npm cache clean --force \
- && npm ci --legacy-peer-deps \
- && npm install @napi-rs/magic-string-linux-x64-gnu --no-save \
- && npm install @oxc-parser/binding-linux-x64-gnu --no-save
+ && npm ci --legacy-peer-deps --include=optional --platform=linux --arch=x64 --libc=glibc
 
 # Copy source
 COPY . .
 
 # Ensure native bindings stay present after copy
-RUN npm install @napi-rs/magic-string@0.3.4 --no-save --platform=linux --arch=x64 --libc=glibc \
- && npm install @napi-rs/magic-string-linux-x64-gnu@0.3.4 --no-save \
- && npm install @oxc-parser/binding-linux-x64-gnu@0.8.0 --no-save
+RUN npm install --no-save --include=optional --platform=linux --arch=x64 --libc=glibc \
+    @napi-rs/magic-string-linux-x64-gnu@0.3.4 \
+    @oxc-parser/binding-linux-x64-gnu@0.8.0
 
 # Tăng heap cho Angular
 ENV NODE_OPTIONS="--max-old-space-size=8192"
