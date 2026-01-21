@@ -1,45 +1,31 @@
 # ============================
 # Stage 1: Build Angular MFE
 # ============================
-FROM node:20-bullseye AS build
+FROM node:22-bullseye AS build
 
 WORKDIR /app
 
-# Toolchain cho native + Rust (BẮT BUỘC)
+# Toolchain cơ bản
 RUN apt-get update && apt-get install -y \
     build-essential \
     python3 \
     git \
-    curl \
-    ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-# ---- CÀI RUST TOOLCHAIN ----
-RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
-ENV PATH="/root/.cargo/bin:${PATH}"
-
-# Pin npm version ổn định
+# Pin npm ổn định cho Node 22
 RUN npm install -g npm@10.5.0
 
-# ÉP npm Linux
-ENV npm_config_optional=true
-ENV npm_config_platform=linux
-ENV npm_config_arch=x64
-ENV npm_config_libc=glibc
+# 🔥 ÉP magic-string dùng WASM (QUAN TRỌNG)
+ENV MAGIC_STRING_FORCE_WASM=1
 
-# Copy lockfile trước
+# Copy lockfile
 COPY package.json package-lock.json ./
 
-# Cài dependencies
+# Cài dependencies (không cần optional native)
 RUN npm cache clean --force \
- && npm ci \
-    --legacy-peer-deps \
-    --include=optional
+ && npm ci --legacy-peer-deps
 
-# 🔥 BẮT BUỘC rebuild native module từ source
-RUN npm rebuild @napi-rs/magic-string --build-from-source
-
-# Copy source code
+# Copy source
 COPY . .
 
 # Build MFE
