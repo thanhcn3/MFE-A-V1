@@ -1,5 +1,4 @@
 node_modules
-dist
 .angular
 .vscode
 .git
@@ -13,3 +12,5 @@ coverage
 .env
 .env.local
 .env.*.local
+# Don't ignore dist folder - needed for Docker build
+# dist
