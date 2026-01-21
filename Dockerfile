@@ -23,7 +23,8 @@ COPY package.json package-lock.json ./
 # Install deps + ép cài native binary
 RUN npm cache clean --force \
  && npm ci --legacy-peer-deps \
- && npm install @napi-rs/magic-string-linux-x64-gnu --no-save
+ && npm install @napi-rs/magic-string-linux-x64-gnu --no-save \
+ && npm install @oxc-parser/binding-linux-x64-gnu --no-save
 
 # Copy source
 COPY . .
