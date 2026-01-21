@@ -1,7 +1,7 @@
 # =====================
 # Stage 1: Build Angular
 # =====================
-FROM node:20-bullseye AS build
+FROM node:18-bullseye AS build
 
 WORKDIR /app
 
@@ -11,6 +11,9 @@ RUN apt-get update && apt-get install -y \
     python3 \
     git \
     && rm -rf /var/lib/apt/lists/*
+
+# Pin npm to a stable version to avoid loader issues
+RUN npm i -g npm@10.5.0
 
 # ÉP npm hiểu đúng môi trường Linux
 ENV npm_config_optional=true
