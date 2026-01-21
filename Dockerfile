@@ -40,7 +40,12 @@ RUN npm install --no-save --include=optional --platform=linux --arch=x64 --libc=
 ENV NODE_OPTIONS="--max-old-space-size=8192"
 
 ARG PROJECT_NAME
-RUN npx ng build ${PROJECT_NAME} --configuration production
+# For remote-home, disable SSR during Docker build to avoid route extraction requiring remoteEntry.json
+RUN if [ "$PROJECT_NAME" = "remote-home" ]; then \
+            npx ng build remote-home --configuration production --ssr=false; \
+        else \
+            npx ng build ${PROJECT_NAME} --configuration production; \
+        fi
 
 
 # =====================

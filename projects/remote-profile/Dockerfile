@@ -32,7 +32,7 @@ RUN npm install --no-save --include=optional --platform=linux --arch=x64 --libc=
 
 ENV NODE_OPTIONS="--max-old-space-size=8192"
 
-RUN npx ng build remote-profile --configuration production
+RUN npx ng build remote-home --configuration production --ssr=false
 
 
 FROM nginx:1.25-alpine
