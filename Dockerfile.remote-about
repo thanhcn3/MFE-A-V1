@@ -5,7 +5,7 @@ FROM nginx:alpine
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy pre-built remote-about application
-COPY dist/remote-about/browser /usr/share/nginx/html
+COPY dist/remote-about /usr/share/nginx/html
 
 # Copy nginx configuration
 COPY nginx-remote.conf /etc/nginx/nginx.conf
