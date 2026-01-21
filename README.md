@@ -28,24 +28,50 @@ npm run run:all
 
 ## 🐳 Docker
 
-Build and run all MFEs with Docker Compose:
+### Quick Start (Recommended)
 
+**Windows:**
 ```bash
-docker compose build
-docker compose up -d
+.\build-docker.bat
 ```
 
-Services:
+**Linux/Mac:**
+```bash
+./build-docker.sh
+```
 
-- Shell: http://localhost:4200
-- Home: http://localhost:4201
-- About: http://localhost:4202
-- Profile: http://localhost:4203
+### Access Application
+```
+http://localhost:8080/shell           # Shell app (main)
+http://localhost:8080/remote-home     # Home remote
+http://localhost:8080/remote-about    # About remote
+http://localhost:8080/remote-profile  # Profile remote
+```
 
-Notes:
+### Build Solutions
 
-- Shell import map points to `http://localhost:4201/4202/4203` per `projects/shell/src/main.ts`. The compose ports match this.
-- Nginx is configured to avoid caching `remoteEntry.json/js` and to serve SPA with fallback.
+#### 1. ⚡ Alpine Linux (Default - Recommended)
+```bash
+docker compose build --no-cache
+docker compose up
+```
+
+#### 2. 🐧 Ubuntu 22.04 (If Alpine fails)
+Edit docker-compose.yml: `dockerfile: Dockerfile.ubuntu`, then:
+```bash
+docker compose build --no-cache
+docker compose up
+```
+
+#### 3. 💻 Local Build (Network issues)
+```bash
+.\build-local.bat       # Windows
+./build-local.sh        # Linux/Mac
+```
+
+### 📖 Documentation
+- 📘 [Complete Guide](DOCKER_BUILD_GUIDE.md) - All solutions & troubleshooting
+- 🚀 [Quick Start](QUICKSTART.md) - TL;DR version
 
 ## 📚 Core Library Usage
 
