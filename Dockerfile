@@ -1,7 +1,7 @@
 # =====================
 # Stage 1: Build Angular
 # =====================
-FROM node:20-alpine
+FROM node:20-alpine AS build
 # ⬆️ node 18 ổn định hơn node 20 với npm trong Docker
 
 WORKDIR /app
