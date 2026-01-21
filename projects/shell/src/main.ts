@@ -19,9 +19,9 @@ const remoteUrls = isLocalhost
   : {
 
     mfeDemo: `${baseUrl}/remoteEntry.json`,
-    remoteHome: `${baseUrl}/remoteEntry.json`,
-    remoteAbout: `${baseUrl}/remoteEntry.json`,
-    remoteProfile: `${baseUrl}/remoteEntry.json`,
+    remoteHome: `${baseUrl}/remote-home/remoteEntry.json`,
+    remoteAbout: `${baseUrl}/remote-about/remoteEntry.json`,
+    remoteProfile: `${baseUrl}/remote-profile/remoteEntry.json`,
   };
 
 initFederation(remoteUrls)
