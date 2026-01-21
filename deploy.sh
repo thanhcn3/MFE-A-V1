@@ -9,7 +9,7 @@ set -e
 # Step 1: Stop and remove existing containers
 echo ""
 echo "[1/6] Stopping and removing existing containers..."
-docker-compose -f docker-compose.separate.yml down 2>/dev/null || true
+docker compose -f docker-compose.separate.yml down 2>/dev/null || true
 docker stop shell remote-home remote-about remote-profile 2>/dev/null || true
 docker rm shell remote-home remote-about remote-profile 2>/dev/null || true
 
@@ -45,7 +45,7 @@ docker build -f Dockerfile.remote-profile -t mfe-remote-profile:latest .
 # Step 6: Start containers
 echo ""
 echo "[6/6] Starting containers..."
-docker-compose -f docker-compose.separate.yml up -d
+docker compose -f docker-compose.separate.yml up -d
 
 echo ""
 echo "========================================"
@@ -59,7 +59,7 @@ echo "  Remote-About:  http://localhost:8082"
 echo "  Remote-Profile: http://localhost:8083"
 echo ""
 echo "View logs:"
-echo "  docker-compose -f docker-compose.separate.yml logs -f"
+echo "  docker compose -f docker-compose.separate.yml logs -f"
 echo ""
 echo "Check status:"
 echo "  docker ps"
