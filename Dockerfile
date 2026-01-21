@@ -1,8 +1,8 @@
 # =====================
 # Stage 1: Build Angular
 # =====================
-FROM node:20-alpine
-# ⬆️ node 18 ổn định hơn node 20 với npm trong Docker
+FROM node:20-alpine AS build
+# Node 20 aligns with @types/node 20 and Angular 21
 
 WORKDIR /app
 
@@ -12,8 +12,7 @@ RUN npm config set registry https://registry.npmjs.org \
  && npm config set fetch-retry-mintimeout 10000 \
  && npm config set fetch-retry-maxtimeout 60000
 
-# Cài Angular CLI global (QUAN TRỌNG)
-RUN npm install -g @angular/cli@latest
+# Use project-local Angular CLI via npx to ensure version match
 
 # Copy dependency files
 COPY package.json package-lock.json ./
@@ -28,7 +27,7 @@ COPY . .
 ENV NODE_OPTIONS="--max-old-space-size=8096"
 
 ARG PROJECT_NAME
-RUN ng build ${PROJECT_NAME} --configuration production
+RUN npx ng build ${PROJECT_NAME} --configuration production
 
 # =====================
 # Stage 2: Nginx
