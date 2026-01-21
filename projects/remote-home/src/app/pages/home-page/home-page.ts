@@ -15,6 +15,7 @@ const ASSET_PATH = new URL('assets/images/', import.meta.url).href;
 export class HomePage {
   private apiService = inject(BaseApiService);
   data: any;
+  heroImage = `url('${ASSET_PATH}home-hero.jpg')`;
 
   features = [
     {

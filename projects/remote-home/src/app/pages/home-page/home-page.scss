@@ -8,11 +8,7 @@
 
 .hero {
   position: relative;
-  /* Note: Background images in CSS for Micro Frontends often need absolute URLs or careful base handling. 
-     Using relative paths like below works within the remote, but might be tricky in Shell.
-     However, Angular build resolves CSS url() relative to the CSS file location.
-     If styles.css is loaded from Remote, relative assets should work. */
-  background-image: url('../../../assets/images/home-hero.jpg');
+  /* Background image set in template via style binding for MFE asset resolution */
   background-size: cover;
   background-position: center;
   color: white;
