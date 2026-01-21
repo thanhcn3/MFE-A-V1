@@ -5,38 +5,44 @@ FROM node:20-bullseye AS build
 
 WORKDIR /app
 
-# Cài toolchain cho native modules (@napi-rs/*)
+# Toolchain cho native + Rust (BẮT BUỘC)
 RUN apt-get update && apt-get install -y \
     build-essential \
     python3 \
     git \
+    curl \
+    ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-# Pin npm version ổn định (tránh lỗi native loader)
+# ---- CÀI RUST TOOLCHAIN ----
+RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
+
+# Pin npm version ổn định
 RUN npm install -g npm@10.5.0
 
-# ÉP npm hiểu đúng môi trường Linux (glibc)
+# ÉP npm Linux
 ENV npm_config_optional=true
 ENV npm_config_platform=linux
 ENV npm_config_arch=x64
 ENV npm_config_libc=glibc
 
-# Copy lockfile trước để tận dụng cache Docker
+# Copy lockfile trước
 COPY package.json package-lock.json ./
 
-# Clean cache + cài deps đúng platform Linux
+# Cài dependencies
 RUN npm cache clean --force \
  && npm ci \
     --legacy-peer-deps \
-    --include=optional \
-    --platform=linux \
-    --arch=x64 \
-    --libc=glibc
+    --include=optional
 
-# Copy toàn bộ source code
+# 🔥 BẮT BUỘC rebuild native module từ source
+RUN npm rebuild @napi-rs/magic-string --build-from-source
+
+# Copy source code
 COPY . .
 
-# Build tất cả các MFE (dùng Angular CLI local)
+# Build MFE
 RUN npx --no-install ng build shell \
  && npx --no-install ng build remote-home \
  && npx --no-install ng build remote-about \
@@ -48,20 +54,13 @@ RUN npx --no-install ng build shell \
 # ============================
 FROM nginx:alpine
 
-# Xoá config mặc định
 RUN rm /etc/nginx/conf.d/default.conf
-
-# Copy nginx config
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Copy kết quả build từ stage build
 COPY --from=build /app/dist/shell/browser /usr/share/nginx/html/shell
 COPY --from=build /app/dist/remote-home/browser /usr/share/nginx/html/remote-home
 COPY --from=build /app/dist/remote-about/browser /usr/share/nginx/html/remote-about
 COPY --from=build /app/dist/remote-profile/browser /usr/share/nginx/html/remote-profile
 
-# Expose port
 EXPOSE 80
-
-# Start nginx
 CMD ["nginx", "-g", "daemon off;"]
