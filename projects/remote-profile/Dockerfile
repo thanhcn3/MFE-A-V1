@@ -1,16 +1,10 @@
 # =====================
-# Remote Profile: Build + Nginx serve
+# Remote-Profile: Build + Nginx serve
 # Build with context at repo root: docker build -f projects/remote-profile/Dockerfile -t mfe-a-v1-remote-profile .
 # =====================
 FROM node:20.19-bullseye AS build
 
 WORKDIR /app
-
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    python3 \
-    git \
-    && rm -rf /var/lib/apt/lists/*
 
 RUN npm i -g npm@10.5.0
 
@@ -32,13 +26,16 @@ RUN npm install --no-save --include=optional --platform=linux --arch=x64 --libc=
 
 ENV NODE_OPTIONS="--max-old-space-size=8192"
 
-RUN npx ng build remote-home --configuration production --ssr=false
+RUN npx ng build remote-profile --configuration production
 
 
+# =====================
+# Stage 2: Nginx
+# =====================
 FROM nginx:1.25-alpine
 
 RUN rm -f /etc/nginx/conf.d/default.conf
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY projects/remote-profile/nginx.conf /etc/nginx/conf.d/default.conf
 
 COPY --from=build /app/dist/remote-profile/browser /usr/share/nginx/html
 

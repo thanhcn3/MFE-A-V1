@@ -26,6 +26,27 @@ npm run run:all
 
 ---
 
+## 🐳 Docker
+
+Build and run all MFEs with Docker Compose:
+
+```bash
+docker compose build
+docker compose up -d
+```
+
+Services:
+
+- Shell: http://localhost:4200
+- Home: http://localhost:4201
+- About: http://localhost:4202
+- Profile: http://localhost:4203
+
+Notes:
+
+- Shell import map points to `http://localhost:4201/4202/4203` per `projects/shell/src/main.ts`. The compose ports match this.
+- Nginx is configured to avoid caching `remoteEntry.json/js` and to serve SPA with fallback.
+
 ## 📚 Core Library Usage
 
 The `core` library is mapped in `tsconfig.json` so you can import it directly from `'core'`.

@@ -6,13 +6,6 @@ FROM node:20.19-bullseye AS build
 
 WORKDIR /app
 
-# Toolchain for optional/native modules
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    python3 \
-    git \
-    && rm -rf /var/lib/apt/lists/*
-
 # Pin npm for stability
 RUN npm i -g npm@10.5.0
 
@@ -50,7 +43,7 @@ RUN npx ng build shell --configuration production
 FROM nginx:1.25-alpine
 
 RUN rm -f /etc/nginx/conf.d/default.conf
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY projects/shell/nginx.conf /etc/nginx/conf.d/default.conf
 
 COPY --from=build /app/dist/shell/browser /usr/share/nginx/html
 

@@ -2,43 +2,35 @@ services:
   shell:
     build:
       context: .
-      dockerfile: Dockerfile
-      network: host
-      args:
-        PROJECT_NAME: shell
+      dockerfile: projects/shell/Dockerfile.static
     ports:
       - "4200:80"
-    restart: always
+    depends_on:
+      - remote-home
+      - remote-about
+      - remote-profile
+    container_name: mfe-shell
 
   remote-home:
     build:
       context: .
-      dockerfile: Dockerfile
-      network: host
-      args:
-        PROJECT_NAME: remote-home
+      dockerfile: projects/remote-home/Dockerfile.static
     ports:
       - "4201:80"
-    restart: always
+    container_name: mfe-remote-home
 
   remote-about:
     build:
       context: .
-      dockerfile: Dockerfile
-      network: host
-      args:
-        PROJECT_NAME: remote-about
+      dockerfile: projects/remote-about/Dockerfile.static
     ports:
       - "4202:80"
-    restart: always
+    container_name: mfe-remote-about
 
   remote-profile:
     build:
       context: .
-      dockerfile: Dockerfile
-      network: host
-      args:
-        PROJECT_NAME: remote-profile
+      dockerfile: projects/remote-profile/Dockerfile.static
     ports:
       - "4203:80"
-    restart: always
+    container_name: mfe-remote-profile

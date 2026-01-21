@@ -1,4 +1,13 @@
 node_modules
+# keep dist to support static docker builds
+.git
+.gitignore
+npm-debug.log*
+yarn-error.log*
+.angular
+.vscode
+.DS_Store
+node_modules
 .git
 .angular
 .vscode
