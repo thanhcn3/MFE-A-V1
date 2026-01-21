@@ -1,7 +1,7 @@
 # =====================
 # Stage 1: Build Angular
 # =====================
-FROM node:18-bullseye AS build
+FROM node:20.19-bullseye AS build
 
 WORKDIR /app
 
