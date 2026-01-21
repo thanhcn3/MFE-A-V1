@@ -5,7 +5,7 @@ const isLocalhost =
   window.location.hostname === 'localhost' ||
   window.location.hostname === '127.0.0.1';
 
-const baseUrl = `${window.location.protocol}//${window.location.hostname}:9091`;
+const baseUrl = `${window.location.protocol}//${window.location.hostname}`;
 
 
 const remoteUrls = isLocalhost
@@ -21,7 +21,6 @@ const remoteUrls = isLocalhost
     remoteAbout: `${baseUrl}/remote-about/remoteEntry.json`,
     remoteProfile: `${baseUrl}/remote-profile/remoteEntry.json`,
   };
-
 
 initFederation(remoteUrls)
   .then(() => import('./bootstrap'))
