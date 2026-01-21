@@ -1,41 +1,57 @@
 # =====================
 # Stage 1: Build Angular
 # =====================
-FROM node:20-alpine AS build
-# Node 20 aligns with @types/node 20 and Angular 21
+FROM node:20.19-bullseye AS build
 
 WORKDIR /app
 
-# Fix npm network + cache
-RUN npm config set registry https://registry.npmjs.org \
- && npm config set fetch-retries 2 \
- && npm config set fetch-retry-mintimeout 10000 \
- && npm config set fetch-retry-maxtimeout 60000
+# Toolchain cho native modules
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    python3 \
+    git \
+    && rm -rf /var/lib/apt/lists/*
 
-# Use project-local Angular CLI via npx to ensure version match
+# Pin npm to a stable version to avoid loader issues
+RUN npm i -g npm@10.5.0
 
-# Copy dependency files
+# ÉP npm hiểu đúng môi trường Linux
+ENV npm_config_optional=true
+ENV npm_config_platform=linux
+ENV npm_config_arch=x64
+ENV npm_config_libc=glibc
+
+# Copy lock trước để cache
 COPY package.json package-lock.json ./
 
-# Install deps (KHÔNG song song)
-RUN npm install --legacy-peer-deps --no-audit --no-fund
+# Install deps + ép cài native binary (platform-aware)
+RUN npm cache clean --force \
+ && npm ci --legacy-peer-deps --include=optional --platform=linux --arch=x64 --libc=glibc
 
 # Copy source
 COPY . .
 
-# Tăng heap cho Angular build
-ENV NODE_OPTIONS="--max-old-space-size=8096"
+# Ensure native bindings stay present after copy
+RUN npm install --no-save --include=optional --platform=linux --arch=x64 --libc=glibc \
+    @napi-rs/magic-string-linux-x64-gnu@0.3.4 \
+    @oxc-parser/binding-linux-x64-gnu@0.8.0
+
+# Tăng heap cho Angular
+ENV NODE_OPTIONS="--max-old-space-size=8192"
 
 ARG PROJECT_NAME
 RUN npx ng build ${PROJECT_NAME} --configuration production
+
 
 # =====================
 # Stage 2: Nginx
 # =====================
 FROM nginx:1.25-alpine
 
-ARG PROJECT_NAME
+RUN rm -f /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+ARG PROJECT_NAME
 COPY --from=build /app/dist/${PROJECT_NAME}/browser /usr/share/nginx/html
 
 EXPOSE 80
