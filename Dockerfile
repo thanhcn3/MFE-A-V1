@@ -31,7 +31,8 @@ RUN npm cache clean --force \
 COPY . .
 
 # Ensure native bindings stay present after copy
-RUN npm install @napi-rs/magic-string-linux-x64-gnu@0.3.4 --no-save \
+RUN npm install @napi-rs/magic-string@0.3.4 --no-save --platform=linux --arch=x64 --libc=glibc \
+ && npm install @napi-rs/magic-string-linux-x64-gnu@0.3.4 --no-save \
  && npm install @oxc-parser/binding-linux-x64-gnu@0.8.0 --no-save
 
 # Tăng heap cho Angular
