@@ -4,5 +4,4 @@
 
 
 FROM scratch
-COPY dist/remote-profile/ /app/
-COPY dist/remote-profile/ /usr/share/nginx/html/
+COPY dist/remote-profile/browser/ /app/browser/

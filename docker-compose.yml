@@ -5,11 +5,50 @@ services:
     build: docker/nginx
     ports:
       - "8080:80"
+    volumes:
+      - shell-static:/usr/share/nginx/html/shell:ro
+      - remote-home-static:/usr/share/nginx/html/remote-home:ro
+      - remote-about-static:/usr/share/nginx/html/remote-about:ro
+      - remote-profile-static:/usr/share/nginx/html/remote-profile:ro
     depends_on:
       - shell
       - remote-home
       - remote-about
       - remote-profile
+
+  shell:
+    build:
+      context: .
+      dockerfile: Dockerfile.shell
+    volumes:
+      - shell-static:/app/browser:ro
+
+  remote-home:
+    build:
+      context: .
+      dockerfile: Dockerfile.remote-home
+    volumes:
+      - remote-home-static:/app/browser:ro
+
+  remote-about:
+    build:
+      context: .
+      dockerfile: Dockerfile.remote-about
+    volumes:
+      - remote-about-static:/app/browser:ro
+
+  remote-profile:
+    build:
+      context: .
+      dockerfile: Dockerfile.remote-profile
+    volumes:
+      - remote-profile-static:/app/browser:ro
+
+volumes:
+  shell-static:
+  remote-home-static:
+  remote-about-static:
+  remote-profile-static:
 
   shell:
     build:

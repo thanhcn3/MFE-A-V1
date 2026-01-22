@@ -4,5 +4,4 @@
 
 
 FROM scratch
-COPY dist/shell/ /app/
-COPY dist/shell/ /usr/share/nginx/html/
+COPY dist/shell/browser/ /app/browser/

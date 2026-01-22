@@ -4,5 +4,4 @@
 
 
 FROM scratch
-COPY dist/remote-home/ /app/
-COPY dist/remote-home/ /usr/share/nginx/html/
+COPY dist/remote-home/browser/ /app/browser/
