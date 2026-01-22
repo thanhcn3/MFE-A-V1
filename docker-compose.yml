@@ -49,23 +49,3 @@ volumes:
   remote-home-static:
   remote-about-static:
   remote-profile-static:
-
-  shell:
-    build:
-      context: .
-      dockerfile: docker/shell/Dockerfile
-
-  remote-home:
-    build:
-      context: .
-      dockerfile: docker/remote-home/Dockerfile
-
-  remote-about:
-    build:
-      context: .
-      dockerfile: docker/remote-about/Dockerfile
-
-  remote-profile:
-    build:
-      context: .
-      dockerfile: docker/remote-profile/Dockerfile
