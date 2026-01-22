@@ -1,23 +1,29 @@
-version: "3.9"
-
 services:
   shell:
-    build: docker/shell
+    build:
+      context: .
+      dockerfile: Dockerfile.shell
     expose:
       - "8081"
 
   remote-home:
-    build: docker/remote-home
+    build:
+      context: .
+      dockerfile: Dockerfile.remote-home
     expose:
       - "8082"
 
   remote-about:
-    build: docker/remote-about
+    build:
+      context: .
+      dockerfile: Dockerfile.remote-about
     expose:
       - "8083"
 
   remote-profile:
-    build: docker/remote-profile
+    build:
+      context: .
+      dockerfile: Dockerfile.remote-profile
     expose:
       - "8084"
 
