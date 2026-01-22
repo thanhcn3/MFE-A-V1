@@ -3,5 +3,5 @@
 
 
 
-FROM scratch
-COPY dist/remote-home/browser/ /app/browser/
+FROM nginx:alpine
+COPY dist/remote-home/browser/ /usr/share/nginx/html/remote-home/

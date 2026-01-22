@@ -3,5 +3,5 @@
 
 
 
-FROM scratch
-COPY dist/shell/browser/ /app/browser/
+FROM nginx:alpine
+COPY dist/shell/browser/ /usr/share/nginx/html/shell/

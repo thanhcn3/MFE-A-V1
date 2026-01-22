@@ -3,5 +3,5 @@
 
 
 
-FROM scratch
-COPY dist/remote-profile/browser/ /app/browser/
+FROM nginx:alpine
+COPY dist/remote-profile/browser/ /usr/share/nginx/html/remote-profile/
