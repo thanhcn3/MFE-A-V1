@@ -1,0 +1,26 @@
+// Design System Button
+@use './variables' as *;
+.ds-btn {
+  padding: 0.5rem 1.5rem;
+  border-radius: $ds-border-radius;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  &.primary {
+    background: $ds-primary;
+    color: #fff;
+  }
+  &.secondary {
+    background: $ds-secondary;
+    color: #fff;
+  }
+  &.danger {
+    background: $ds-danger;
+    color: #fff;
+  }
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}

@@ -1,0 +1,6 @@
+// Global SCSS for remote-home miniapp
+@use '../../../../core/src/lib/design-system/variables' as variables;
+
+body {
+  background: variables.$ds-light;
+}

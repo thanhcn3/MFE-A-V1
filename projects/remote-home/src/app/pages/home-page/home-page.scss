@@ -8,7 +8,7 @@
 
 .hero {
   position: relative;
-  /* Background image set in template via style binding for MFE asset resolution */
+  /* Background image set in template via styles binding for MFE asset resolution */
   background-size: cover;
   background-position: center;
   color: white;
@@ -25,7 +25,7 @@
     background: rgba(0, 0, 0, 0.6);
     z-index: 1;
   }
-  
+
   .hero-content {
     position: relative;
     z-index: 2;
@@ -72,7 +72,7 @@
       &.secondary {
         background-color: transparent;
         border: 2px solid white;
-        
+
         &:hover {
           background-color: white;
           color: #333;
@@ -96,14 +96,14 @@
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
-  
+
   h2 {
     text-align: center;
     margin-bottom: 3rem;
     font-size: 2.5rem;
     color: #2c3e50;
     position: relative;
-    
+
     &:after {
       content: '';
       display: block;
@@ -141,7 +141,7 @@
       object-fit: cover;
       transition: transform 0.5s;
     }
-    
+
     &:hover .feature-image {
       transform: scale(1.05);
     }

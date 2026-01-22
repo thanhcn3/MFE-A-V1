@@ -1,0 +1,19 @@
+// Design System Typography
+
+@use './variables' as *;
+
+body {
+  font-family: $ds-font-family;
+  color: $ds-dark;
+}
+
+.ds-heading {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: $ds-spacing;
+}
+
+.ds-text {
+  font-size: 1rem;
+  color: $ds-dark;
+}
