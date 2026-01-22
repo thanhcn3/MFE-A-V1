@@ -1,4 +1,8 @@
-# Copy built static files for shell app into image
+
+
+
+
+
 FROM scratch
 COPY dist/shell/ /app/
-
+COPY dist/shell/ /usr/share/nginx/html/

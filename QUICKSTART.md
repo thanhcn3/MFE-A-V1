@@ -226,7 +226,7 @@ docker compose build --no-cache
 docker compose up
 
 ## Option C: Ubuntu nếu Alpine lỗi
-# Sửa docker-compose.yml: dockerfile: Dockerfile.ubuntu
+# Sửa docker-compose.yml: Dockerfile: Dockerfile.ubuntu
 docker compose build --no-cache
 docker compose up
 

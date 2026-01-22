@@ -1,4 +1,8 @@
-# Copy built static files for remote-home app into image
+
+
+
+
+
 FROM scratch
 COPY dist/remote-home/ /app/
-
+COPY dist/remote-home/ /usr/share/nginx/html/

@@ -1,13 +1,32 @@
-version: '3.8'
+version: "3.9"
 
 services:
-  mfe-app:
+  nginx:
+    build: docker/nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - shell
+      - remote-home
+      - remote-about
+      - remote-profile
+
+  shell:
     build:
       context: .
-      dockerfile: Dockerfile
-    ports:
-      - "9091:80"
-    restart: unless-stopped
-    container_name: mfe-angular-app
-    environment:
-      - NODE_ENV=production
+      dockerfile: docker/shell/Dockerfile
+
+  remote-home:
+    build:
+      context: .
+      dockerfile: docker/remote-home/Dockerfile
+
+  remote-about:
+    build:
+      context: .
+      dockerfile: docker/remote-about/Dockerfile
+
+  remote-profile:
+    build:
+      context: .
+      dockerfile: docker/remote-profile/Dockerfile
