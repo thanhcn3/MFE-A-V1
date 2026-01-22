@@ -1,12 +1,10 @@
 import { initFederation } from '@angular-architects/native-federation';
 
-
 const isLocalhost =
   window.location.hostname === 'localhost' ||
   window.location.hostname === '127.0.0.1';
 
-const baseUrl = `${window.location.protocol}//${window.location.hostname}`;
-
+const baseUrl = `${window.location.protocol}//${window.location.host}`;
 
 const remoteUrls = isLocalhost
   ? {
@@ -25,5 +23,5 @@ const remoteUrls = isLocalhost
 initFederation(remoteUrls)
   .then(() => import('./bootstrap'))
   .catch((err) => {
-    console.error(' Federation init failed', err);
+    console.error('Federation init failed', err);
   });
