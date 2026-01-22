@@ -1,0 +1,58 @@
+<div class="custom-table-wrapper">
+	<table class="custom-table">
+		<thead>
+			<tr>
+				<th *ngIf="columns.length">#</th>
+				<th *ngFor="let col of columns" (click)="col.sortable ? sortBy(col.key) : null" [class.sortable]="col.sortable">
+					{{ col.label | translate }}
+                    <span *ngIf="col.sortable" class="sort-icon">
+                    <i
+                        *ngIf="sortKey !== col.key || sortState === 'none'"
+                        class="fa fa-sort"
+                    ></i>
+                    <i
+                        *ngIf="sortKey === col.key && sortState === 'asc'"
+                        class="fa fa-sort-up"
+                    ></i>
+                    <i
+                        *ngIf="sortKey === col.key && sortState === 'desc'"
+                        class="fa fa-sort-down"
+                    ></i>
+                    </span>
+
+				</th>
+				<th>Hành động</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let row of sortedData; let i = index" class="table-row">
+				<td *ngIf="columns.length">{{ i + 1 }}</td>
+				<td *ngFor="let col of columns">
+					<ng-container *ngIf="col.key === 'active'; else normalCell">
+						<span [ngClass]="row[col.key] ? 'active' : 'inactive'">
+							{{ row[col.key] ? 'Hoạt động' : 'Ngừng' }}
+						</span>
+					</ng-container>
+					<ng-template #normalCell>{{ row[col.key] }}</ng-template>
+				</td>
+				<td class="action-cell">
+					<ng-container *ngFor="let action of actions">
+						<button
+							class="action-btn {{action.class || ''}}"
+							(click)="action.onClick(row)"
+							type="button"
+							[attr.title]="action.label"
+						>
+							<img *ngIf="action.icon"
+                            class="action-icon"
+                            [ngClass]="action.class"
+                            [src]="action.icon"
+                            alt="action icon" />
+							<span class="action-label">{{ action.label | translate }}</span>
+						</button>
+					</ng-container>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

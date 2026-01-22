@@ -11,6 +11,8 @@ export * from './lib/services/toast.service';
 export * from './lib/component/toast/toast.component';
 export * from './lib/services/language.service';
 export * from './lib/utils/i18n.utils';
+export * from './lib/component/custom-table-component/custom-table-component';
+// Add further exports as needed
 
 
 

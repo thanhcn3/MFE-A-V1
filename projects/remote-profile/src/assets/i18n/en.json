@@ -13,5 +13,12 @@
     "RECENT_ACTIVITY": "Recent Activity",
     "ROLE": "Role",
     "LOCATION": "Location"
+    ,
+    "NAME": "Name",
+    "EMAIL": "Email",
+    "STATUS": "Status",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "VIEW": "View"
   }
 }

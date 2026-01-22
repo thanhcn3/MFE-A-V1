@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService, TranslateLoader, TranslateStore } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
-import { LanguageService, createTranslateLoader } from 'core';
+import { LanguageService, createTranslateLoader, CustomTableComponent } from 'core';
 import { Subscription } from 'rxjs';
 
 const ASSET_PATH = new URL('assets/images/', import.meta.url).href;
@@ -10,7 +10,7 @@ const ASSET_PATH = new URL('assets/images/', import.meta.url).href;
 @Component({
   selector: 'app-profile-page',
   standalone: true,
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, CustomTableComponent],
   providers: [
     TranslateService,
     TranslateStore,
@@ -67,4 +67,38 @@ export class ProfilePage implements OnInit, OnDestroy {
       'Deployed to production'
     ]
   };
+
+  tableData = [
+    { name: 'Nguyễn Văn A', email: 'a@example.com', active: true },
+    { name: 'Trần Thị B', email: 'b@example.com', active: false },
+    { name: 'Lê Văn C', email: 'c@example.com', active: true },
+  ];
+
+  tableColumns = [
+    { key: 'name', label: 'PROFILE.NAME', sortable: true },
+    { key: 'email', label: 'PROFILE.EMAIL', sortable: true },
+    { key: 'active', label: 'PROFILE.STATUS', sortable: true },
+  ];
+
+  tableActions = [
+    {
+      label: '',
+      class: 'edit',
+      icon: `${ASSET_PATH}pen-to-square-solid-full.svg`,
+      onClick: (row: any) => { alert('Sửa: ' + row.name); }
+    },
+    {
+      label: '',
+      class: 'delete',
+      icon: `${ASSET_PATH}trash-can-regular-full.svg`,
+      onClick: (row: any) => { alert('Xoá: ' + row.name); }
+    },
+    {
+      label: '',
+      class: 'view',
+      icon: `${ASSET_PATH}view-solid-full.svg`,
+      onClick: (row: any) => { alert('Xem: ' + row.name); }
+    }
+  ];
+
 }

@@ -13,5 +13,12 @@
     "RECENT_ACTIVITY": "Hoạt động gần đây",
     "ROLE": "Vai trò",
     "LOCATION": "Địa điểm"
+    ,
+    "NAME": "Họ tên",
+    "EMAIL": "Email",
+    "STATUS": "Trạng thái",
+    "EDIT": "Sửa",
+    "DELETE": "Xoá",
+    "VIEW": "Xem"
   }
 }

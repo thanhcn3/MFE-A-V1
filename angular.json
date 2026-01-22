@@ -137,6 +137,7 @@
 						],
 						"styles": [
 							"projects/shell/src/styles.scss",
+							"node_modules/font-awesome/css/font-awesome.min.css",
 							"node_modules/bootstrap/dist/css/bootstrap.min.css"
 						],
 						"scripts": [
@@ -253,6 +254,7 @@
 						],
 						"styles": [
 							"projects/remote-home/src/styles.scss",
+							"node_modules/font-awesome/css/font-awesome.min.css",
 							"node_modules/bootstrap/dist/css/bootstrap.min.css"
 						],
 						"scripts": [
@@ -372,6 +374,7 @@
 						],
 						"styles": [
 							"projects/remote-about/src/styles.scss",
+							"node_modules/font-awesome/css/font-awesome.min.css",
 							"node_modules/bootstrap/dist/css/bootstrap.min.css"
 						],
 						"scripts": [
@@ -485,6 +488,7 @@
 						],
 						"styles": [
 							"projects/remote-profile/src/styles.scss",
+							"node_modules/font-awesome/css/font-awesome.min.css",
 							"node_modules/bootstrap/dist/css/bootstrap.min.css"
 						],
 						"scripts": [
