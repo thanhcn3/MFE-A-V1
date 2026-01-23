@@ -14,7 +14,7 @@ import { AuthStore, ToastService } from 'core';
 export class LoginPage {
   username = '';
   password = '';
-  
+
   private authStore = inject(AuthStore);
   private toastService = inject(ToastService);
   private router = inject(Router);
@@ -27,23 +27,23 @@ export class LoginPage {
         username: this.username,
         password: this.password
       };
-      
+
       this.authStore.login(payload).subscribe({
         next: () => {
-          this.toastService.success('Login successfully!', 2000);
+          this.toastService.success('Login','Login successfully!', 2000);
           this.router.navigate(['/home']);
         },
         error: (err) => {
           console.error('Login failed full error:', err);
           if (err.status === 404) {
-             this.toastService.error('Error 404: API endpoint not found. Please check Proxy settings or Backend URL.');
+             this.toastService.error('Login fail','Error 404: API endpoint not found. Please check Proxy settings or Backend URL.');
           } else {
-             this.toastService.error(`Login failed! Error ${err.status}: ${err.message}`);
+             this.toastService.error('Login fail',`Login failed! Error ${err.status}: ${err.message}`);
           }
         }
       });
     } else {
-      this.toastService.warning('Please enter username and password');
+      this.toastService.warning('Login','Please enter username and password');
     }
   }
 }

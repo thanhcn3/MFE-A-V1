@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { BaseApiService, LanguageService, createTranslateLoader } from 'core';
+import {BaseApiService, LanguageService, createTranslateLoader, ToastService} from 'core';
 import { TranslateModule, TranslateService, TranslateLoader, TranslateStore } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
@@ -30,8 +30,9 @@ export class HomePage implements OnInit, OnDestroy {
   private apiService = inject(BaseApiService);
   // Inject TranslateService and LanguageService via constructor
   constructor(
-     private translate: TranslateService, 
-     private languageService: LanguageService
+     private translate: TranslateService,
+     private languageService: LanguageService,
+     private toastService: ToastService
   ) {}
 
   private langSub!: Subscription;
@@ -74,6 +75,8 @@ export class HomePage implements OnInit, OnDestroy {
 
   callApi() {
     this.apiService.get('https://jsonplaceholder.typicode.com/todos/1').subscribe((res) => {
+      // @ts-ignore
+      this.toastService.success("test1","Thanh Công", 20000);
       this.data = res;
     });
   }

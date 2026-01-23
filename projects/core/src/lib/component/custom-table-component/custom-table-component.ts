@@ -19,10 +19,6 @@ export class CustomTableComponent {
    */
   @Input() data: any[] = [];
 
-  /**
-   * i18n: object chứa các label dịch, ví dụ { name: 'Họ tên', email: 'Email', ... }
-   */
-
   originalData: any[] = [];
   sortedData: any[] = [];
   sortKey: string | null = null;
