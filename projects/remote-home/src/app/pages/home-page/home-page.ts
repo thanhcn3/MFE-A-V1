@@ -76,7 +76,7 @@ export class HomePage implements OnInit, OnDestroy {
   callApi() {
     this.apiService.get('https://jsonplaceholder.typicode.com/todos/1').subscribe((res) => {
       // @ts-ignore
-      this.toastService.success("test1","Thanh Công", 20000);
+      this.toastService.success("test1","Thanh Công", 200000);
       this.data = res;
     });
   }

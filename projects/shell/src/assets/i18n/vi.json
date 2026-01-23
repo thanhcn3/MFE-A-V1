@@ -1,5 +1,13 @@
 {
   "SHELL": {
     "TITLE": "MFE ví dụ Shell"
+  },
+  "SIDEBAR": {
+    "HOME": "Trang chủ",
+    "ABOUT": "Giới thiệu",
+    "PROFILE": "Hồ sơ",
+    "PROFILE_SETTINGS": "Cài đặt",
+    "PROFILE_NOTIFICATIONS": "Thông báo",
+    "PROFILE_HISTORY": "Lịch sử"
   }
 }

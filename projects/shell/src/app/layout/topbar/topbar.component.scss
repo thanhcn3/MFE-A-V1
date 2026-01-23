@@ -20,8 +20,41 @@
   }
 
   .breadcrumb {
-    font-size: 0.85rem;
-    color: #7f8c8d;
+    ol {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0 0;
+      margin: 0;
+      list-style: none;
+      font-size: 0.9rem;
+      color: #7f8c8d;
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    a {
+      color: #2980b9;
+      text-decoration: none;
+      font-weight: 600;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .crumb-separator {
+      color: #b0b6bb;
+    }
+
+    .current span {
+      color: #2c3e50;
+      font-weight: 700;
+    }
   }
 }
 

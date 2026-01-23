@@ -1,45 +1,30 @@
 <aside class="sidebar-container">
   <a routerLink="/" class="brand">
-    <span class="brand-logo">🚀</span>
+    <span class="brand-logo"></span>
     <span class="brand-text">MFE Demo</span>
   </a>
 
   <ul class="nav-links">
-    <li>
-      <a routerLink="/home" routerLinkActive="active" class="nav-link">
-        <span class="icon">🏠</span>
-        <span>Home</span>
+    <li *ngFor="let item of menuItems">
+      <a *ngIf="item.children" [routerLink]="item.path" routerLinkActive="active" class="nav-link parent" [class.expanded]="item.open" (click)="onParentClick(item, $event)">
+        <span class="bullet"></span>
+        <span class="label">{{ item.labelKey ? (item.labelKey | translate) : item.label }}</span>
+        <span class="chevron" [class.rotate]="item.open" (click)="onParentClick(item, $event); $event.stopPropagation(); $event.preventDefault()">›</span>
       </a>
-    </li>
-    <li>
-      <a routerLink="/about" routerLinkActive="active" class="nav-link">
-        <span class="icon">ℹ️</span>
-        <span>About Us</span>
+
+      <a *ngIf="!item.children" [routerLink]="item.path" routerLinkActive="active" class="nav-link" (click)="onLeafClick(item)">
+        <span class="bullet"></span>
+        <span class="label">{{ item.labelKey ? (item.labelKey | translate) : item.label }}</span>
       </a>
-    </li>
-    <li>
-      <a routerLink="/profile" routerLinkActive="active" class="nav-link">
-        <span class="icon">👤</span>
-        <span>Profile</span>
-      </a>
-    </li>
-    <li>
-      <a routerLink="/profile/settings" routerLinkActive="active" class="nav-link">
-        <span class="icon">⚙️</span>
-        <span>Settings</span>
-      </a>
-    </li>
-    <li>
-      <a routerLink="/profile/notifications" routerLinkActive="active" class="nav-link">
-        <span class="icon">🔔</span>
-        <span>Notifications</span>
-      </a>
-    </li>
-    <li>
-      <a routerLink="/profile/history" routerLinkActive="active" class="nav-link">
-        <span class="icon">📜</span>
-        <span>History</span>
-      </a>
+
+      <ul *ngIf="item.children" class="child-list" [class.open]="item.open">
+        <li *ngFor="let child of item.children">
+          <a [routerLink]="child.path" routerLinkActive="active" class="nav-link child" (click)="onChildClick(item, child)">
+            <span class="bullet"></span>
+            <span class="label">{{ child.labelKey ? (child.labelKey | translate) : child.label }}</span>
+          </a>
+        </li>
+      </ul>
     </li>
   </ul>
 
@@ -56,7 +41,7 @@
       <li><a class="dropdown-item" href="#">Settings</a></li>
       <li><a class="dropdown-item" href="#" routerLink="/profile">Profile</a></li>
       <li><hr class="dropdown-divider"></li>
-      <li><a class="dropdown-item" href="#">Sign out</a></li>
+      <li><a class="dropdown-item" href="#" (click)="logout()">Sign out</a></li>
     </ul>
   </div>
 </aside>

@@ -1,7 +1,15 @@
 <header class="topbar-container">
   <div class="page-title">
     <h1>{{ 'SHELL.TITLE' | translate }}</h1>
-    <span class="breadcrumb">Home / Overview</span>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <ol>
+        <li *ngFor="let crumb of (breadcrumb$ | async) ?? []; let last = last" [class.current]="last">
+          <a *ngIf="crumb.path && !last" [routerLink]="crumb.path">{{ crumb.labelKey ? (crumb.labelKey | translate) : crumb.label }}</a>
+          <span *ngIf="!crumb.path || last">{{ crumb.labelKey ? (crumb.labelKey | translate) : crumb.label }}</span>
+          <span *ngIf="!last" class="crumb-separator">›</span>
+        </li>
+      </ol>
+    </nav>
   </div>
   
   <div class="topbar-actions">

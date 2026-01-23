@@ -1,5 +1,13 @@
 {
   "SHELL": {
     "TITLE": "MFE Demo Shell"
+  },
+  "SIDEBAR": {
+    "HOME": "Home",
+    "ABOUT": "About Us",
+    "PROFILE": "Profile",
+    "PROFILE_SETTINGS": "Settings",
+    "PROFILE_NOTIFICATIONS": "Notifications",
+    "PROFILE_HISTORY": "History"
   }
 }
