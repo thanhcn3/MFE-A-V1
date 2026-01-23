@@ -9,15 +9,15 @@ const baseUrl = `${window.location.protocol}//${window.location.host}`;
 const remoteUrls = isLocalhost
   ? {
     mfeDemo: 'http://localhost:4200/remoteEntry.json',
-    remoteHome: 'http://localhost:4201/remoteEntry.json',
-    remoteAbout: 'http://localhost:4202/remoteEntry.json',
-    remoteProfile: 'http://localhost:4203/remoteEntry.json',
+    'remote-home': 'http://localhost:4201/remoteEntry.json',
+    'remote-about': 'http://localhost:4202/remoteEntry.json',
+    'remote-profile': 'http://localhost:4203/remoteEntry.json',
   }
   : {
     mfeDemo: `${baseUrl}/remoteEntry.json`,
-    remoteHome: `${baseUrl}/remote-home/remoteEntry.json`,
-    remoteAbout: `${baseUrl}/remote-about/remoteEntry.json`,
-    remoteProfile: `${baseUrl}/remote-profile/remoteEntry.json`,
+    'remote-home': `${baseUrl}/remote-home/remoteEntry.json`,
+    'remote-about': `${baseUrl}/remote-about/remoteEntry.json`,
+    'remote-profile': `${baseUrl}/remote-profile/remoteEntry.json`,
   };
 
 initFederation(remoteUrls)

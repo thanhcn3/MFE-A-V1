@@ -17,15 +17,15 @@ export const routes: Routes = [
       },
       {
         path: 'home',
-        loadChildren: () => loadRemoteModule('remoteHome', './Routes').then((m) => m.routes),
+        loadChildren: () => loadRemoteModule('remote-home', './Routes').then((m) => m.routes),
       },
       {
         path: 'about',
-        loadChildren: () => loadRemoteModule('remoteAbout', './Routes').then((m) => m.routes),
+        loadChildren: () => loadRemoteModule('remote-about', './Routes').then((m) => m.routes),
       },
       {
         path: 'profile',
-        loadChildren: () => loadRemoteModule('remoteProfile', './Routes').then((m) => m.routes),
+        loadChildren: () => loadRemoteModule('remote-profile', './Routes').then((m) => m.routes),
       },
     ]
   },
