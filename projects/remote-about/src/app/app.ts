@@ -1,9 +1,9 @@
 import { Component, signal } from '@angular/core';
-import { AboutPage } from './pages/about-page/about-page';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [AboutPage],
+  imports: [RouterModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

@@ -11,6 +11,109 @@ It consists of a Shell application and 3 Remote applications (Home, About, Profi
 - **projects/remote-profile**: User Profile application.
 - **projects/core**: Shared library containing State, Services, Guards, and Helpers.
 
+## ➕ Create a New Miniapp (Remote)
+
+Mục tiêu: miniapp mới được load qua router (native federation) thay vì share component trực tiếp.
+
+1) Tạo skeleton
+- Clone một remote hiện có (ví dụ `projects/remote-home`) thành thư mục mới `projects/remote-<name>`; đổi `name` trong `project.json`, `angular.json`, scripts nếu cần.
+- Đặt cổng dev riêng (ví dụ 4204) trong `package.json` script `start` của miniapp mới.
+
+2) Cấu hình route trong miniapp
+- `src/app/app.html`: dùng `<router-outlet></router-outlet>`.
+- `src/app/app.ts`: import `RouterModule` và dùng trong `imports` của root component.
+- `src/app/app.routes.ts`: định nghĩa `export const routes: Routes = [...]`. Nếu cần HTTP/Translate riêng, có thể thêm `providers` tại route gốc (xem mẫu ở remote-profile).
+
+3) Expose router qua Module Federation
+- `projects/remote-<name>/federation.config.js`:
+  ```js
+  exposes: {
+    './Component': './projects/remote-<name>/src/app/app.ts', // giữ lại nếu cần
+    './Routes': './projects/remote-<name>/src/app/app.routes.ts',
+  },
+  ```
+
+4) Đăng ký remote vào shell
+- `projects/shell/src/main.ts`: thêm URL cho remote mới (local và deploy):
+  ```ts
+  const remoteUrls = isLocalhost ? {
+    ...
+    remoteNew: 'http://localhost:4204/remoteEntry.json',
+  } : {
+    ...
+    remoteNew: `${baseUrl}/remote-new/remoteEntry.json`,
+  };
+  ```
+- `projects/shell/src/app/app.routes.ts`: thêm route lazy load router của remote mới:
+  ```ts
+  {
+    path: 'new',
+    loadChildren: () => loadRemoteModule('remoteNew', './Routes').then(m => m.routes),
+  },
+  ```
+- (Tuỳ chọn) thêm link menu vào sidebar bằng `routerLink="/new"`.
+
+5) Chạy độc lập và cùng shell
+- Chạy miniapp: `npm run start -- --project remote-<name>` (hoặc script tương ứng).
+- Chạy shell: `npm start -- --project shell` hoặc `npm run run:all` để chạy tất cả.
+
+6) Kiểm tra
+- Mở `http://localhost:4200/<path-remote>` (ví dụ `/new`) để xác nhận shell load router từ miniapp mới.
+
+### 📜 Lệnh mẫu tạo nhanh miniapp mới (remote-new)
+
+> Ví dụ dùng PowerShell trên Windows; với bash, thay `Copy-Item` bằng `cp -r`.
+
+1) Nhân bản một remote làm template
+```powershell
+Set-Location d:/FPT_FIS/CaiNhatThanh/MFE/repo/MFE-A-V1
+Copy-Item -Recurse -Force projects/remote-home projects/remote-new
+```
+
+2) Đổi tên dự án (tối thiểu trong package.json và federation.config.js)
+```powershell
+(Get-Content projects/remote-new/package.json) -replace 'remote-home','remote-new' | Set-Content projects/remote-new/package.json
+(Get-Content projects/remote-new/federation.config.js) -replace 'remote-home','remote-new' | Set-Content projects/remote-new/federation.config.js
+```
+
+3) Thêm expose router nếu chưa có
+```powershell
+# Mở projects/remote-new/federation.config.js và chắc chắn có:
+# exposes: {
+#   './Component': './projects/remote-new/src/app/app.ts',
+#   './Routes': './projects/remote-new/src/app/app.routes.ts',
+# }
+```
+
+4) Đảm bảo app.html và app.ts dùng router
+- app.html: `<router-outlet></router-outlet>`
+- app.ts: import `RouterModule` và đưa vào `imports` của component.
+
+5) Shell: thêm remote mới
+```powershell
+# projects/shell/src/main.ts
+# thêm vào remoteUrls (local): remoteNew: 'http://localhost:4204/remoteEntry.json'
+
+# projects/shell/src/app/app.routes.ts
+# thêm route:
+# {
+#   path: 'new',
+#   loadChildren: () => loadRemoteModule('remoteNew', './Routes').then(m => m.routes),
+# },
+```
+
+6) Chạy dev
+```powershell
+# Cửa sổ 1: remote-new
+npm run start -- --project remote-new --port 4204
+
+# Cửa sổ 2: shell
+npm run start -- --project shell
+```
+
+7) Kiểm tra
+- Mở http://localhost:4200/new
+
 ## 🚀 How to Run
 
 To run the entire ecosystem (Shell + 3 Remotes) in parallel:
