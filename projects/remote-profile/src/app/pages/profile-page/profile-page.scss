@@ -1,3 +1,5 @@
+@use '../../../../core/src/lib/design-system/design-system';
+
 .profile-container {
   display: flex;
   justify-content: center;
@@ -165,6 +167,33 @@
                 }
             }
         }
+    }
+  }
+
+  .quick-edit {
+    margin-top: 2rem;
+    text-align: left;
+
+    h3 {
+      font-size: 1rem;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    .quick-edit-form {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      background: #f8f9fb;
+      border: 1px solid #e9ecef;
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .quick-edit-actions {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
     }
   }
 }

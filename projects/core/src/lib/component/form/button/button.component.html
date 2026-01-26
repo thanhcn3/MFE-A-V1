@@ -1,0 +1,16 @@
+<button
+  [attr.type]="type"
+  class="ds-btn"
+  [class.primary]="variant === 'primary'"
+  [class.secondary]="variant === 'secondary'"
+  [class.danger]="variant === 'danger'"
+  [class.sm]="size === 'sm'"
+  [class.lg]="size === 'lg'"
+  [class.full-width]="fullWidth"
+  [class.loading]="loading"
+  [disabled]="disabled || loading"
+  (click)="handleClick($event)"
+>
+  <span class="ds-spinner" *ngIf="loading"></span>
+  <span class="btn-label">{{ label }}</span>
+</button>

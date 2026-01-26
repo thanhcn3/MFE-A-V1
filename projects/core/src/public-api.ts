@@ -18,6 +18,8 @@ export * from './lib/component/toast-component/toast-component';
 export * from './lib/component/popup-component/footer.component';
 export * from './lib/component/popup-component/footer-modal.component';
 export * from './lib/component/popup-component/popup-confirm.component';
+export * from './lib/component/form/input/input.component';
+export * from './lib/component/form/button/button.component';
 // Add further exports as needed
 
 

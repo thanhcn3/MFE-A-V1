@@ -1,0 +1,101 @@
+// Design System Form Controls
+@use './variables' as *;
+
+.ds-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-family: $ds-font-family;
+}
+
+.ds-label {
+  font-weight: 600;
+  color: $ds-dark;
+}
+
+.ds-required {
+  color: $ds-danger;
+  margin-left: 0.25rem;
+}
+
+.ds-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.ds-input {
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: $ds-border-radius;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: #fff;
+  &.ds-input-sm {
+    padding: 0.4rem 0.65rem;
+    font-size: 0.9375rem;
+  }
+  &.ds-select {
+    appearance: none;
+    padding-right: 2.5rem;
+    background-image:
+      linear-gradient(45deg, transparent 50%, $ds-dark 50%),
+      linear-gradient(135deg, $ds-dark 50%, transparent 50%);
+    background-position:
+      calc(100% - 18px) calc(50% - 4px),
+      calc(100% - 12px) calc(50% - 4px);
+    background-size: 6px 6px;
+    background-repeat: no-repeat;
+  }
+  &:focus {
+    outline: none;
+    border-color: $ds-primary;
+    box-shadow: 0 0 0 0.15rem rgba(25, 118, 210, 0.15);
+  }
+  &:disabled {
+    background: $ds-light;
+    cursor: not-allowed;
+  }
+}
+
+.ds-input-wrapper.select::after {
+  content: '';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-left: 1px solid #6c757d;
+  border-bottom: 1px solid #6c757d;
+  transform: translateY(-40%) rotate(-45deg);
+  pointer-events: none;
+}
+
+.ds-suffix {
+  position: absolute;
+  right: 0.75rem;
+  color: $ds-secondary;
+  font-size: 0.875rem;
+}
+
+.ds-hint {
+  color: $ds-secondary;
+  font-size: 0.875rem;
+}
+
+.ds-error {
+  color: $ds-danger;
+  font-size: 0.875rem;
+}
+
+.ds-input-wrapper.error .ds-input {
+  border-color: $ds-danger;
+  box-shadow: 0 0 0 0.1rem rgba(211, 47, 47, 0.12);
+}
+
+.ds-field.disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}

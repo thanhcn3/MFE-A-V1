@@ -1,12 +1,17 @@
 // Design System Button
 @use './variables' as *;
 .ds-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
   padding: 0.5rem 1.5rem;
   border-radius: $ds-border-radius;
   border: none;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+  font-family: $ds-font-family;
   &.primary {
     background: $ds-primary;
     color: #fff;
@@ -19,8 +24,43 @@
     background: $ds-danger;
     color: #fff;
   }
+  &.sm {
+    padding: 0.4rem 1rem;
+    font-size: 0.9375rem;
+  }
+  &.lg {
+    padding: 0.7rem 1.8rem;
+    font-size: 1.05rem;
+  }
+  &.full-width {
+    width: 100%;
+  }
+  &.loading {
+    pointer-events: none;
+    opacity: 0.85;
+  }
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+  }
+  &:not(:disabled):hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+  &:not(:disabled):active {
+    transform: translateY(1px);
+  }
+  .ds-spinner {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 999px;
+    border: 2px solid rgba(255, 255, 255, 0.55);
+    border-top-color: #fff;
+    animation: ds-spin 0.8s linear infinite;
+  }
+}
+
+@keyframes ds-spin {
+  to {
+    transform: rotate(360deg);
   }
 }

@@ -10,9 +10,10 @@ Import `design-system.scss` in your miniapp's main SCSS file to use shared style
 ## Features
 - Variables: colors, spacing, border-radius, font-family
 - Mixins: flex-center, card-shadow
-- Components: button, card, typography
+- Components: button, card, typography, form controls (input/select)
 
 ## Class Examples
-- `.ds-btn.primary`, `.ds-btn.secondary`, `.ds-btn.danger`
+- `.ds-btn.primary`, `.ds-btn.secondary`, `.ds-btn.danger`, `.ds-btn.sm`, `.ds-btn.lg`, `.ds-btn.full-width`
+- `.ds-field`, `.ds-label`, `.ds-input`, `.ds-select`, `.ds-error`, `.ds-hint`
 - `.ds-card`
 - `.ds-heading`, `.ds-text`

@@ -53,6 +53,47 @@
            </ul>
          </div>
       </div>
+
+      <div class="quick-edit">
+        <h3>{{ 'PROFILE.QUICK_EDIT' | translate }}</h3>
+        <form [formGroup]="profileForm" (ngSubmit)="submitProfile()" class="quick-edit-form">
+          <core-input
+            formControlName="fullName"
+            label="{{ 'PROFILE.FULL_NAME' | translate }}"
+            placeholder="{{ 'PROFILE.FULL_NAME_PLACEHOLDER' | translate }}"
+            [required]="true"
+            [error]="profileForm.get('fullName')?.invalid && profileForm.get('fullName')?.touched ? ('PROFILE.REQUIRED' | translate) : ''"
+          ></core-input>
+
+          <core-input
+            formControlName="role"
+            label="{{ 'PROFILE.ROLE' | translate }}"
+            placeholder="{{ 'PROFILE.ROLE_PLACEHOLDER' | translate }}"
+          ></core-input>
+
+          <core-input
+            formControlName="location"
+            label="{{ 'PROFILE.LOCATION' | translate }}"
+            placeholder="{{ 'PROFILE.LOCATION_PLACEHOLDER' | translate }}"
+            suffix="🌍"
+          ></core-input>
+
+          <div class="quick-edit-actions">
+            <core-button
+              type="submit"
+              variant="primary"
+              [loading]="saving"
+              label="{{ 'PROFILE.SAVE' | translate }}"
+            ></core-button>
+            <core-button
+              type="button"
+              variant="secondary"
+              (clicked)="resetForm()"
+              label="{{ 'PROFILE.RESET' | translate }}"
+            ></core-button>
+          </div>
+        </form>
+      </div>
       <div style="margin-top: 32px">
         <lib-custom-table-component
           [data]="tableData"

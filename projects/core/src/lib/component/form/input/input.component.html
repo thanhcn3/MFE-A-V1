@@ -1,0 +1,26 @@
+<div class="ds-field" [class.disabled]="disabled">
+  <label *ngIf="label" class="ds-label">
+    {{ label }}
+    <span *ngIf="required" class="ds-required">*</span>
+  </label>
+
+  <div class="ds-input-wrapper" [class.error]="!!error">
+    <input
+      class="ds-input"
+      [class.ds-input-sm]="size === 'sm'"
+      [attr.type]="type"
+      [attr.placeholder]="placeholder || null"
+      [value]="value"
+      [readonly]="readonly"
+      [disabled]="disabled"
+      [attr.autocomplete]="autocomplete"
+      (input)="handleInput($any($event.target).value ?? '')"
+      (blur)="handleBlur()"
+      (focus)="handleFocus()"
+    />
+    <span *ngIf="suffix" class="ds-suffix">{{ suffix }}</span>
+  </div>
+
+  <small *ngIf="error" class="ds-error">{{ error }}</small>
+  <small *ngIf="!error && hint" class="ds-hint">{{ hint }}</small>
+</div>
