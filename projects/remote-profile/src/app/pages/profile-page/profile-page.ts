@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService, TranslateLoader, TranslateStore } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
-import { LanguageService, createTranslateLoader, CustomTableComponent } from 'core';
+import { LanguageService, SharedDataService, createTranslateLoader, CustomTableComponent } from 'core';
 import { Subscription } from 'rxjs';
 
 const ASSET_PATH = new URL('assets/images/', import.meta.url).href;
@@ -27,10 +27,12 @@ const ASSET_PATH = new URL('assets/images/', import.meta.url).href;
 })
 export class ProfilePage implements OnInit, OnDestroy {
   private langSub!: Subscription;
+  private profileSub?: Subscription;
 
   constructor(
     private translate: TranslateService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private sharedData: SharedDataService
   ) {}
 
   ngOnInit() {
@@ -42,11 +44,25 @@ export class ProfilePage implements OnInit, OnDestroy {
     this.langSub = this.languageService.language$.subscribe(lang => {
        this.translate.use(lang);
     });
+
+    this.profileSub = this.sharedData.data$<{ name: string; role: string; location?: string; email?: string }>('user-profile')
+      .subscribe(profile => {
+        if (profile) {
+          this.user = {
+            ...this.user,
+            ...profile,
+          };
+        }
+      });
   }
 
   ngOnDestroy() {
     if (this.langSub) {
       this.langSub.unsubscribe();
+    }
+
+    if (this.profileSub) {
+      this.profileSub.unsubscribe();
     }
   }
 

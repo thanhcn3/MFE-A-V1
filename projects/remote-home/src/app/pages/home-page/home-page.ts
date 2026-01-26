@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import {BaseApiService, LanguageService, createTranslateLoader, ToastService} from 'core';
+import {BaseApiService, LanguageService, SharedDataService, createTranslateLoader, ToastService} from 'core';
 import { TranslateModule, TranslateService, TranslateLoader, TranslateStore } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
@@ -29,11 +29,12 @@ const ASSET_PATH = new URL('assets/images/', import.meta.url).href;
 export class HomePage implements OnInit, OnDestroy {
   private apiService = inject(BaseApiService);
   // Inject TranslateService and LanguageService via constructor
-  constructor(
-     private translate: TranslateService,
-     private languageService: LanguageService,
-     private toastService: ToastService
-  ) {}
+    constructor(
+      private translate: TranslateService,
+      private languageService: LanguageService,
+      private toastService: ToastService,
+      private sharedData: SharedDataService
+    ) {}
 
   private langSub!: Subscription;
 
@@ -79,5 +80,16 @@ export class HomePage implements OnInit, OnDestroy {
       this.toastService.success("test1","Thanh Công", 200000);
       this.data = res;
     });
+  }
+
+  broadcastProfile() {
+    const profile = {
+      name: 'Thanh',
+      role: 'Admin',
+      location: 'Ha Noi',
+      email: 'thanh@example.com'
+    };
+    this.sharedData.setData('user-profile', profile);
+    this.toastService.info('Share', 'Đã gửi dữ liệu user-profile', 3000);
   }
 }
