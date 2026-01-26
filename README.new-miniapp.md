@@ -1,7 +1,7 @@
 # Huong dan tao miniapp moi
 
 Tai lieu nay mo ta quy trinh them mot miniapp (remote) moi vao monorepo, gom cac lenh mau, cac file can sua, va cach dang ky vao angular.json va shell.
-
+##
 ## 0) Dat ten va port
 - Ten goi mau: `remote-<name>` (vi du: `remote-new`).
 - Chon port dev chua dung: shell 4200, home 4201, about 4202, profile 4203 -> miniapp moi bat dau 4204 tro len.
