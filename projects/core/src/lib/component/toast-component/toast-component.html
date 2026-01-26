@@ -2,14 +2,7 @@
   <div class="toast-card" *ngFor="let toast of toastService.toasts(); trackBy: trackById" [ngClass]="toast.type">
     <div class="toast-left">
       <div class="toast-icon">
-        <i class="fa-solid"
-           [ngClass]="{
-             'fa-check-circle': toast.type === 'success',
-             'fa-times-circle': toast.type === 'error',
-             'fa-info-circle': toast.type === 'info',
-             'fa-exclamation-triangle': toast.type === 'warning'
-           }">
-        </i>
+        <img class="toast-icon-img" [src]="getIcon(toast.type)" [alt]="toast.type + ' toast icon'" />
       </div>
     </div>
 
@@ -26,7 +19,7 @@
       class="toast-close"
       (click)="toastService.remove(toast.id)"
       aria-label="Close">
-      <i class="fa-solid fa-xmark">X</i>
+      <img class="toast-close-icon" [src]="closeIcon" alt="Close" />
     </button>
   </div>
 </div>

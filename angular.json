@@ -28,6 +28,11 @@
 							{
 								"glob": "**/*",
 								"input": "public"
+							},
+							{
+								"glob": "**/*",
+								"input": "projects/core/src/lib/assets",
+								"output": "assets"
 							}
 						],
 						"styles": [
@@ -133,6 +138,11 @@
                 "glob": "**/*",
                 "input": "projects/shell/src/assets",
                 "output": "assets"
+							},
+							{
+								"glob": "**/*",
+								"input": "projects/core/src/lib/assets",
+								"output": "assets"
               }
 						],
 						"styles": [
@@ -250,6 +260,11 @@
                 "glob": "**/*",
                 "input": "projects/remote-home/src/assets",
                 "output": "assets"
+							},
+							{
+								"glob": "**/*",
+								"input": "projects/core/src/lib/assets",
+								"output": "assets"
               }
 						],
 						"styles": [
@@ -370,6 +385,11 @@
                 "glob": "**/*",
                 "input": "projects/remote-about/src/assets",
                 "output": "assets"
+							},
+							{
+								"glob": "**/*",
+								"input": "projects/core/src/lib/assets",
+								"output": "assets"
               }
 						],
 						"styles": [
@@ -484,6 +504,11 @@
                 "glob": "**/*",
                 "input": "projects/remote-profile/src/assets",
                 "output": "assets"
+							},
+							{
+								"glob": "**/*",
+								"input": "projects/core/src/lib/assets",
+								"output": "assets"
               }
 						],
 						"styles": [
