@@ -1,0 +1,9 @@
+<div
+  class="ds-loading-overlay"
+  [class.fullscreen]="fullscreen"
+  [class.active]="active()"
+  *ngIf="active()"
+>
+  <div class="spinner"></div>
+  <div class="message" *ngIf="message">{{ message }}</div>
+</div>

@@ -1,0 +1,47 @@
+@use '../../design-system/design-system';
+@use '../../design-system/variables' as *;
+
+:host {
+  display: block;
+}
+
+.ds-loading-overlay {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.75);
+  color: $ds-dark;
+  inset: 0;
+  z-index: 1000;
+  border-radius: 8px;
+  &.fullscreen {
+    position: fixed;
+    inset: 0;
+  }
+  &:not(.fullscreen) {
+    position: absolute;
+  }
+
+  .spinner {
+    width: 48px;
+    height: 48px;
+    border-radius: 999px;
+    border: 4px solid rgba(25, 118, 210, 0.2);
+    border-top-color: $ds-primary;
+    animation: ds-spin 0.9s linear infinite;
+  }
+
+  .message {
+    font-weight: 600;
+    color: $ds-dark;
+  }
+}
+
+@keyframes ds-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -12,5 +12,6 @@
     <button (click)="login()" [disabled]="isLoading()" class="btn btn-primary">
       {{ isLoading() ? 'Loading...' : 'Login' }}
     </button>
+    <core-loading-overlay key="login" [fullscreen]="false"></core-loading-overlay>
   </div>
 </div>

@@ -2,12 +2,13 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthStore, ToastService } from 'core';
+import { AuthStore, LoadingService, ToastService, LoadingOverlayComponent } from 'core';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, LoadingOverlayComponent],
   templateUrl: './login-page.html',
   styleUrls: ['./login-page.scss']
 })
@@ -18,8 +19,9 @@ export class LoginPage {
   private authStore = inject(AuthStore);
   private toastService = inject(ToastService);
   private router = inject(Router);
+  private loading = inject(LoadingService);
 
-  isLoading = this.authStore.isLoading;
+  isLoading = () => this.loading.isLoadingKey('login');
 
   login() {
     if (this.username && this.password) {
@@ -28,7 +30,9 @@ export class LoginPage {
         password: this.password
       };
 
-      this.authStore.login(payload).subscribe({
+      const stopLoading = this.loading.start('login');
+
+      this.authStore.login(payload).pipe(finalize(() => stopLoading())).subscribe({
         next: () => {
           this.toastService.success('Login','Login successfully!', 2000);
           this.router.navigate(['/home']);
