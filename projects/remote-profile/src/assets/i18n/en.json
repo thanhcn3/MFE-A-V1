@@ -19,6 +19,10 @@
     "STATUS": "Status",
     "EDIT": "Edit",
     "DELETE": "Delete",
-    "VIEW": "View"
+    "VIEW": "View",
+    "CONFIRM_DELETE": "Are you sure you want to delete {{name}}?",
+    "MULTI_CONFIRM_TITLE": "Handle request",
+    "MULTI_CONFIRM_LINE1": "Choose what to do with {{name}}",
+    "MULTI_CONFIRM_LINE2": "You can approve, reject or decide later"
   }
 }

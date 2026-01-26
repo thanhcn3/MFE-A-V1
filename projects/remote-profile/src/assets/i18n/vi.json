@@ -19,6 +19,10 @@
     "STATUS": "Trạng thái",
     "EDIT": "Sửa",
     "DELETE": "Xoá",
-    "VIEW": "Xem"
+    "VIEW": "Xem",
+    "CONFIRM_DELETE": "Bạn có chắc muốn xoá {{name}}?",
+    "MULTI_CONFIRM_TITLE": "Xử lý yêu cầu",
+    "MULTI_CONFIRM_LINE1": "Chọn hành động với {{name}}",
+    "MULTI_CONFIRM_LINE2": "Bạn có thể duyệt, từ chối hoặc để sau"
   }
 }

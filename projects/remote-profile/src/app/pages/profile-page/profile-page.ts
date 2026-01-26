@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService, TranslateLoader, TranslateStore } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
-import { LanguageService, SharedDataService, createTranslateLoader, CustomTableComponent } from 'core';
+import { LanguageService, SharedDataService, createTranslateLoader, CustomTableComponent, ModalService, PopupConfirmComponent } from 'core';
+import { MultiActionFooterComponent } from './multi-action-footer.component';
 import { Subscription } from 'rxjs';
 
 const ASSET_PATH = new URL('assets/images/', import.meta.url).href;
@@ -32,7 +33,8 @@ export class ProfilePage implements OnInit, OnDestroy {
   constructor(
     private translate: TranslateService,
     private languageService: LanguageService,
-    private sharedData: SharedDataService
+    private sharedData: SharedDataService,
+    private modalService: ModalService
   ) {}
 
   ngOnInit() {
@@ -107,14 +109,43 @@ export class ProfilePage implements OnInit, OnDestroy {
       label: '',
       class: 'delete',
       icon: `${ASSET_PATH}trash-can-regular-full.svg`,
-      onClick: (row: any) => { alert('Xoá: ' + row.name); }
+      onClick: (row: any) => { this.deleteRow(row); }
     },
     {
       label: '',
       class: 'view',
       icon: `${ASSET_PATH}view-solid-full.svg`,
-      onClick: (row: any) => { alert('Xem: ' + row.name); }
+      onClick: (row: any) => { this.openMultiActionConfirm(row); }
     }
   ];
+
+
+  openMultiActionConfirm(row: any) {
+    const content = [
+      this.translate.instant('PROFILE.MULTI_CONFIRM_LINE1', { name: row.name }),
+      this.translate.instant('PROFILE.MULTI_CONFIRM_LINE2'),
+    ]
+
+    const idModalConfirm = this.modalService.showModal(
+      this.translate.instant('PROFILE.MULTI_CONFIRM_TITLE'),
+      PopupConfirmComponent,
+      { content },
+      MultiActionFooterComponent,
+      {
+        onApprove: () => console.log('Approve', row.name),
+        onMaybe: () => console.log('Maybe later', row.name),
+        onReject: () => console.log('Reject', row.name),
+      },
+      { width: '920px' }
+    )
+  }
+
+  deleteRow(row: any) {
+    this.tableData = this.tableData.filter((item) => item !== row)
+  }
+
+  closeModal(modalId: string) {
+    this.modalService.hideModal(modalId)
+  }
 
 }
